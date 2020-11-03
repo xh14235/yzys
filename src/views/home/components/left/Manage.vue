@@ -1,7 +1,7 @@
 <template>
-  <div>
-    <Park v-if="shows.includes('left01')"></Park>
-    <Test v-if="shows.includes('left02')"></Test>
+  <div class="common-wrapper">
+    <ParkInfo v-if="shows.includes('left01')"></ParkInfo>
+    <AbnormalMonitoring v-if="shows.includes('left02')"></AbnormalMonitoring>
   </div>
 </template>
 
@@ -10,8 +10,9 @@ import { mapState } from "vuex";
 export default {
   name: "Manage",
   components: {
-    Park: () => import("@/components/details/Park"),
-    Test: () => import("@/components/details/Test")
+    ParkInfo: () => import("@/components/details/manage/ParkInfo"),
+    AbnormalMonitoring: () =>
+      import("@/components/details/manage/AbnormalMonitoring")
   },
   computed: {
     ...mapState(["dispose"]),

@@ -55,7 +55,6 @@ export default {
 .home-tab
   width: 100vw
   height: $commonHeight
-  background: green
   display: flex
   justify-content: left
   align-items: center

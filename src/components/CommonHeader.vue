@@ -9,13 +9,13 @@
 </template>
 
 <script>
-import axios from "axios";
+import { weather } from "@/http/api";
 export default {
   name: "CommonHeader",
   data() {
     return {
       nowTime: "",
-      weather: "晴天"
+      weather: ""
     };
   },
   methods: {
@@ -41,13 +41,15 @@ export default {
       setInterval(this.getTime, 1000);
     },
     getWeather() {
-      axios
-        .post(
-          "https://tianqiapi.com/api?version=v1&appid=95555958&appsecret=uBN3Pyn2&city=上海"
-        )
-        .then(res => {
-          this.weather = res.data.data[0].wea;
-        });
+      weather({
+        version: "v1",
+        appid: "95555958",
+        appsecret: "uBN3Pyn2",
+        city: "上海"
+      }).then(res => {
+        // console.log(res);
+        this.weather = res.data[0].wea;
+      });
     }
   },
   created() {
@@ -61,7 +63,6 @@ export default {
 .common-header-wrapper
   width: 100vw
   height: 8vh
-  background: #eee
   display: flex
   justify-content: space-between
   align-items: center

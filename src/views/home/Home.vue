@@ -32,7 +32,10 @@ export default {
 .home-wrapper
   width: 100vw
   height: 100vh
+  padding 0 1.5625vw
   overflow: hidden
+  background-image: url('../../assets/img/bg.jpg')
+  background-size: cover
   display: flex
   flex-direction: column
   .home-header-wrapper, .home-footer-wrapper

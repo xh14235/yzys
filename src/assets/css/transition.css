@@ -4,14 +4,14 @@
   opacity: 0;
 }
 .fade-enter-active{
-  transition: all 0.3s ease-in;
+  transition: all 0.8s ease-in;
 }
 .fade-leave-to{
   transform: translateY(100%);
   opacity: 0;
 }
 .fade-leave-active{
-  transition: all 0.3s ease-out;
+  transition: all 0.8s ease-out;
 }
 /* 右侧切换 */
 .fadeRight-enter{
@@ -19,14 +19,14 @@
   opacity: 0;
 }
 .fadeRight-enter-active{
-  transition: all 0.3s ease-in;
+  transition: all 0.8s ease-in;
 }
 .fadeRight-leave-to{
   transform: translateY(100%);
   opacity: 0;
 }
 .fadeRight-leave-active{
-  transition: all 0.3s ease-out;
+  transition: all 0.8s ease-out;
 }
 /* 下拉框 */
 .slide-enter, .slide-leave-to{

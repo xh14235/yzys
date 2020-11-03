@@ -32,7 +32,7 @@ export default {
 <style scoped lang="stylus">
 @import '~@/assets/css/common.styl'
 .home-right
-  width: 20vw
+  width: 20.8333vw
   height: 'calc(100vh  - 2 * %s)' % $commonHeight
   overflow: hidden
 </style>

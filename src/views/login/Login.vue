@@ -5,11 +5,20 @@
 </template>
 
 <script>
+import { login } from "../../http/api";
 export default {
   name: "Login",
   methods: {
     login() {
-      this.$router.push("/home");
+      login({
+        username: "portal",
+        password: this.$getRsaCode("admin123")
+      }).then(res => {
+        // console.log(res);
+        if (res.code) {
+          this.$router.push("/home");
+        }
+      });
     }
   }
 };
