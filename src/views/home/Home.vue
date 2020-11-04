@@ -39,10 +39,10 @@ export default {
   display: flex
   flex-direction: column
   .home-header-wrapper, .home-footer-wrapper
-    width: 100vw
+    width: 100%
     height: $commonHeight
   .home-main-wrapper
-    width: 100vw
+    width: 100%
     height: 'calc(100vh  - 2 * %s)' % $commonHeight
     display: flex
     align-items: center

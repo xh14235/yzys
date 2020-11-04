@@ -2,6 +2,7 @@ import Vue from "vue";
 import App from "./App.vue";
 import router from "./router";
 import store from "./store";
+import echarts from "echarts";
 import "./plugins/element.js";
 // rsa加密
 import JSEncrypt from "jsencrypt";
@@ -21,6 +22,7 @@ Vue.prototype.$getRsaCode = str => {
 };
 
 Vue.config.productionTip = false;
+Vue.prototype.$echarts = echarts;
 
 new Vue({
   router,
