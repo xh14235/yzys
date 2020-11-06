@@ -7,7 +7,7 @@ if (process.env.NODE_ENV === "development") {
 } else if (process.env.NODE_ENV === "debug") {
   axios.defaults.baseURL = "";
 } else if (process.env.NODE_ENV === "production") {
-  axios.defaults.baseURL = "http://116.236.30.222:9000/";
+  axios.defaults.baseURL = "http://116.236.30.222:9020/";
 }
 
 axios.defaults.timeout = 10000;

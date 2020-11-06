@@ -2,11 +2,12 @@
   <div class="common-wrapper">
     <ParkInfo v-if="shows.includes('left01')"></ParkInfo>
     <AbnormalMonitoring v-if="shows.includes('left02')"></AbnormalMonitoring>
+    <div class="line" ref="line"></div>
   </div>
 </template>
 
 <script>
-import { mapState } from "vuex";
+import { mapState, mapMutations } from "vuex";
 export default {
   name: "Manage",
   components: {
@@ -19,6 +20,17 @@ export default {
     shows() {
       return this.dispose.Manage;
     }
+  },
+  methods: {
+    ...mapMutations(["changeMapIconHeight"])
+  },
+  activated() {
+    setTimeout(() => {
+      let line = this.$refs.line;
+      let height =
+        document.body.clientHeight - line.getBoundingClientRect().top;
+      this.changeMapIconHeight(height);
+    }, 500);
   }
 };
 </script>

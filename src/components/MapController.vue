@@ -1,5 +1,5 @@
 <template>
-  <div class="map-controller">
+  <div class="map-controller" ref="controller">
     <div
       class="controller-item"
       v-for="item of list"
@@ -15,6 +15,7 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
 export default {
   name: "MapController",
   data() {
@@ -47,6 +48,9 @@ export default {
       ]
     };
   },
+  computed: {
+    ...mapState(["mapIconHeight"])
+  },
   methods: {
     itemClick(item) {
       item.active = !item.active;
@@ -66,13 +70,21 @@ export default {
     itemIconLeave(item) {
       item.titleShow = false;
     }
+  },
+  watch: {
+    mapIconHeight() {
+      let controller = this.$refs.controller;
+      controller.style.bottom = this.mapIconHeight + "px";
+    }
   }
 };
 </script>
 
 <style scoped lang="stylus">
 .map-controller
-  margin-right: auto
+  position: absolute
+  left: 23vw
+  transition: all 0.3s
   .controller-item
     cursor: pointer
     display: flex

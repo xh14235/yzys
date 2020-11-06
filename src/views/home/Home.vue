@@ -46,5 +46,5 @@ export default {
     height: 'calc(100vh  - 2 * %s)' % $commonHeight
     display: flex
     align-items: center
-    justify-content: flex-start
+    justify-content: space-between
 </style>

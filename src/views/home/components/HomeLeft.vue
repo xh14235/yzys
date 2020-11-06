@@ -5,6 +5,7 @@
         <component :is="view"></component>
       </keep-alive>
     </transition>
+    <!-- <div class="line" ref="line"></div> -->
   </div>
 </template>
 
