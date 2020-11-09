@@ -40,6 +40,7 @@
 
 <script>
 import { login } from "../../http/api";
+import { mapMutations } from "vuex";
 export default {
   name: "Login",
   data() {
@@ -49,12 +50,16 @@ export default {
     };
   },
   methods: {
+    ...mapMutations(["mutLogin"]),
     login() {
       login({
         username: this.username,
         password: this.$getRsaCode(this.password)
       }).then(res => {
-        if (res.code === 200) {
+        let data = res.data;
+        if (data.code === 200) {
+          let token = data.data.tokenHead + data.data.token;
+          this.mutLogin(token);
           this.$router.push("/home");
         } else {
           alert("账号或者密码错误！");

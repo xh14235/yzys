@@ -19,10 +19,8 @@ export default {
       green: state => state.color.green,
       blue: state => state.color.blue,
       yellow: state => state.color.yellow,
-      bgreen: state => state.color.bgreen,
       red: state => state.color.red,
-      white: state => state.color.white,
-      lgreen: state => state.color.lgreen
+      white: state => state.color.white
     })
   },
   watch: {
@@ -34,9 +32,7 @@ export default {
     drawLine(lineData) {
       let bodyWidth = document.body.offsetWidth;
       let series = [];
-      let seriesLength = lineData.y2
-        ? lineData.legendData.length - 1
-        : lineData.legendData.length;
+      let seriesLength = lineData.legendData.length
       let fontTitle = bodyWidth <= 1920 ? 14 : 16;
       let fontXy = bodyWidth <= 1920 ? 9 : 12;
       let lineWidth = 1.5;
@@ -100,7 +96,7 @@ export default {
           name: lineData.yName || "",
           nameLocation: "end",
           nameTextStyle: {
-            color: this.lgreen,
+            color: "#fff",
             fontSize: fontXy,
             align: "right",
             verticalAlign: "bottom"
@@ -110,18 +106,18 @@ export default {
             show: true,
             textStyle: {
               fontSize: fontXy,
-              color: "#c3edd7"
+              color: this.white
             }
           },
           axisLine: {
             lineStyle: {
-              color: "#33403E"
+              color: "#636D6C"
             }
           },
           splitLine: {
             show: true,
             lineStyle: {
-              color: "#33403E"
+              color: "#636D6C"
             }
           }
         }
@@ -140,104 +136,13 @@ export default {
           data: lineData.legendData
         }
       ];
-      if (lineData.y2) {
-        yAxis.push({
-          type: "value",
-          name: lineData.yName2 || "",
-          nameLocation: "end",
-          nameTextStyle: {
-            color: this.lgreen,
-            fontSize: fontXy,
-            align: "left"
-            // verticalAlign: verticalAlign
-          },
-          axisLabel: {
-            show: true,
-            textStyle: {
-              fontSize: fontXy,
-              color: "#c3edd7"
-            }
-          },
-          axisLine: {
-            lineStyle: {
-              color: "#33403E"
-            }
-          },
-          splitLine: {
-            show: true,
-            lineStyle: {
-              color: "#33403E"
-            }
-          }
-        });
-        series.push({
-          name: lineData.legendData[lineData.legendData.length - 1],
-          data: lineData.data[lineData.legendData.length - 1],
-          symbol: "circle",
-          symbolSize: 2,
-          smooth: "true",
-          type: "line",
-          yAxisIndex: 1,
-          itemStyle: {
-            normal: {
-              areaStyle: {
-                color: new this.$echarts.graphic.LinearGradient(0, 0, 0, 1, [
-                  {
-                    offset: 0,
-                    color: lineData.color[lineData.legendData.length - 1]
-                  },
-                  {
-                    offset: 1,
-                    color: "transparent"
-                  }
-                ])
-              },
-              lineStyle: {
-                width: 2,
-                type: "solid",
-                color: lineData.color[lineData.legendData.length - 1]
-              }
-            },
-            emphasis: {}
-          }
-        });
-        let arr = lineData.legendData;
-        let arr2 = [arr.pop()];
-        legend = [
-          {
-            show: lineData.legendShow,
-            textStyle: {
-              fontSize: fontXy,
-              color: this.white
-            },
-            itemWidth: 15,
-            left: "15",
-            top: "0",
-            icon: "line",
-            data: arr
-          },
-          {
-            show: lineData.legendShow,
-            textStyle: {
-              fontSize: fontXy,
-              color: this.white
-            },
-            itemWidth: 15,
-            right: "15",
-            top: "0",
-            icon: "bar",
-            data: arr2
-          }
-        ];
-      }
       let myChart = this.$echarts.init(document.getElementById(lineData.id));
       let option = {
         title: {
           text: lineData.title,
           textStyle: {
-            color: this.lgreen,
-            fontSize: fontTitle,
-            fontWeight: 600
+            color: "#fff",
+            fontSize: fontTitle
           },
           top: lineData.titleTop,
           left: lineData.titleLeft,
@@ -266,12 +171,12 @@ export default {
             // interval: 0, // x轴文字显示完全
             textStyle: {
               fontSize: fontXy,
-              color: "#c3edd7"
+              color: this.white
             }
           },
           axisLine: {
             lineStyle: {
-              color: "#33403E"
+              color: "#636D6C"
             }
           },
           data: lineData.xData

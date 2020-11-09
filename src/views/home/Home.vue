@@ -34,6 +34,7 @@ export default {
   height: 100vh
   padding 0 1.5625vw
   overflow: hidden
+  // background: #111
   background-image: url('../../assets/img/bg.jpg')
   background-size: cover
   display: flex

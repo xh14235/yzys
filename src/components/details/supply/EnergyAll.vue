@@ -14,6 +14,7 @@
 </template>
 
 <script>
+import { getAllEnergyNum } from "@/http/api";
 export default {
   name: "EnergyAll",
   data() {
@@ -23,6 +24,13 @@ export default {
   },
   methods: {
     getList() {
+      getAllEnergyNum().then(({ data }) => {
+        console.log(Object.values(data.data));
+        // this.energyList[0].num = res.data.data.electricity;
+        // this.energyList[1].num = res.data.data.hotWater;
+        // this.energyList[2].num = res.data.data.cold;
+        // this.energyList[3].num = res.data.data.hot;
+      });
       this.energyList = [
         {
           title: "供电",

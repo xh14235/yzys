@@ -3,7 +3,7 @@ import store from "@/store/index";
 
 // 环境的切换
 if (process.env.NODE_ENV === "development") {
-  axios.defaults.baseURL = "/";
+  axios.defaults.baseURL = "";
 } else if (process.env.NODE_ENV === "debug") {
   axios.defaults.baseURL = "";
 } else if (process.env.NODE_ENV === "production") {
@@ -17,7 +17,6 @@ axios.defaults.headers.post["Content-Type"] = "application/json";
 axios.interceptors.request.use(
   config => {
     let token = store.state.token;
-    // let token = localStorage.token
     config.headers.common["Authorization"] = token;
     return config;
   },

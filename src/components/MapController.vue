@@ -91,9 +91,28 @@ export default {
     justify-content: space-between
     align-items: center
     .item-icon
-      width: 2vh
-      height: 2vh
-      background: #aaa
-      &.item-icon-active
-        background: #111
+      width: 1.875vw
+      height: 1.875vw
+      background-size: 100% 100%
+      margin-top: 1.852vh
+    &:nth-child(1)
+      .item-icon
+        background-image: url("../assets/img/map-icon11.png")
+      .item-icon-active
+        background-image: url("../assets/img/map-icon12.png")
+    &:nth-child(2)
+      .item-icon
+        background-image: url("../assets/img/map-icon21.png")
+      .item-icon-active
+        background-image: url("../assets/img/map-icon22.png")
+    &:nth-child(3)
+      .item-icon
+        background-image: url("../assets/img/map-icon31.png")
+      .item-icon-active
+        background-image: url("../assets/img/map-icon32.png")
+    &:nth-child(4)
+      .item-icon
+        background-image: url("../assets/img/map-icon41.png")
+      .item-icon-active
+        background-image: url("../assets/img/map-icon42.png")
 </style>

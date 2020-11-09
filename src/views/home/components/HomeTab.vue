@@ -59,8 +59,15 @@ export default {
   justify-content: left
   align-items: center
   .home-tab-item
-    padding: 0.5vh 1.5vh
+    width: 5.42vw
+    height: 3.61vh
+    line-height: 3.61vh
+    text-align: center
+    margin-right: 2.1875vw
+    font-size: $font20
+    background-image: url("../../../assets/img/bottom-tab-bg.png")
+    background-size: 100% 100%
     cursor: pointer
     &.active
-      color: yellow
+      background-image: url("../../../assets/img/bottom-tab-bg-active.png")
 </style>
