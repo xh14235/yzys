@@ -1,36 +1,13 @@
 <template>
-  <div
-    class="echarts-kuang"
-    @click="showEchartsPopup({ data: barData, type: 'bar' })"
-  >
+  <div class="echarts-kuang">
     <div :id="barData.id" class="echarts-id"></div>
   </div>
 </template>
 
 <script>
-import { mapState, mapMutations } from "vuex";
-// import green from '../../assets/img/icon-green.png'
-// import yellow from '../../assets/img/icon-yellow.png'
-// import blue from '../../assets/img/icon-blue.png'
-// import red from '../../assets/img/icon-red.png'
+import { mapState } from "vuex";
 export default {
   name: "Ebar",
-  // data () {
-  //   return {
-  //     barData1: {
-  //       id: 'bar1',
-  //       title: '柱状图',
-  //       legendShow: true,
-  //       legendData: ['水', '电'],
-  //       color: ['red', 'blue', 'green'],
-  //       xData: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
-  //       data: [
-  //         [820, 932, 444, 934, 1290, 1330, 1320],
-  //         [820, 112, 344, 534, 1690, 1130, 1320]
-  //       ]
-  //     }
-  //   }
-  // },
   props: {
     barData: Object
   },
@@ -42,10 +19,8 @@ export default {
       green: state => state.color.green,
       blue: state => state.color.blue,
       yellow: state => state.color.yellow,
-      bgreen: state => state.color.bgreen,
       red: state => state.color.red,
-      white: state => state.color.white,
-      lgreen: state => state.color.lgreen
+      white: state => state.color.white
     })
   },
   watch: {
@@ -59,100 +34,15 @@ export default {
     }
   },
   methods: {
-    ...mapMutations(["showEchartsPopup"]),
-    rgba(hex, opacity) {
-      return `rgba(${parseInt("0x" + hex.slice(1, 3))}, ${parseInt(
-        "0x" + hex.slice(3, 5)
-      )}, ${parseInt("0x" + hex.slice(5, 7))}, ${opacity})`;
-    },
     drawBar(barData) {
-      let _this = this;
       let series = [];
-      let data = [];
-      let legendData = [];
-      let itemWidth = 0;
-      let itemHeight = 0;
-      if (barData.legendIcon) {
-        // legendData = [
-        //   {
-        //     name: "电",
-        //     icon: "image://" + green
-        //   },
-        //   {
-        //     name: "热水",
-        //     icon: "image://" + yellow
-        //   },
-        //   {
-        //     name: "冷",
-        //     icon: "image://" + blue
-        //   },
-        //   {
-        //     name: "热",
-        //     icon: "image://" + red
-        //   }
-        // ];
-        itemWidth = 10;
-        itemHeight = 10;
-      } else {
-        legendData = barData.legendData;
-        itemWidth = 15;
-        itemHeight = 5;
-      }
-      let bodyWidth = document.body.offsetWidth;
-      let fontTitle = bodyWidth <= 1920 ? 14 : 16;
-      let fontXy = bodyWidth <= 1920 ? 9 : 12;
-      let legendTop = "8%";
-      let legendLeft = "10%";
-      let barWidth = 10;
-      let itemGap = 15;
-      for (let i = 0; i < barData.data.length; i++) {
-        data.push([]);
-      }
-      if (barData.itemStyle === 1) {
-        for (let i = 0; i < barData.data.length; i++) {
-          for (let j = 0; j < barData.data[i].length; j++) {
-            data[i].push({
-              value: barData.data[i][j],
-              itemStyle: {
-                normal: {
-                  color: this.rgba(barData.color[i], 0.5),
-                  borderColor: barData.color[i],
-                  borderWidth: 1
-                }
-              }
-            });
-          }
-        }
-      } else if (barData.itemStyle === 2) {
-        for (let i = 0; i < barData.data.length; i++) {
-          for (let j = 0; j < barData.data[i].length; j++) {
-            data[i].push({
-              value: barData.data[i][j],
-              itemStyle: {
-                normal: {
-                  color: new _this.$echarts.graphic.LinearGradient(0, 0, 0, 1, [
-                    { offset: 0, color: this.rgba(barData.color[i], 1) },
-                    { offset: 0.05, color: this.rgba(barData.color[i], 1) },
-                    { offset: 0.06, color: this.rgba(barData.color[i], 0.5) },
-                    { offset: 1, color: this.rgba(barData.color[i], 0) }
-                  ])
-                }
-              }
-            });
-          }
-        }
-      } else {
-        data = barData.data;
-      }
       let seriesLength = barData.legendData.length;
-      let stack = barData.stack || null;
       for (let i = 0; i < seriesLength; i++) {
         series.push({
           name: barData.legendData[i],
-          data: data[i],
+          data: barData.data[i],
           type: "bar",
-          stack: stack,
-          barWidth: barWidth
+          barWidth: 10
         });
       }
       let myChart = this.$echarts.init(document.getElementById(barData.id));
@@ -160,9 +50,8 @@ export default {
         title: {
           text: barData.title,
           textStyle: {
-            color: this.lgreen,
-            fontSize: fontTitle,
-            fontWeight: 600
+            color: this.white,
+            fontSize: 16
           }
         },
         tooltip: {
@@ -171,16 +60,16 @@ export default {
         legend: {
           show: barData.legendShow,
           textStyle: {
-            fontSize: fontXy,
+            fontSize: 12,
             color: this.white
           },
-          icon: "bar",
-          itemWidth: itemWidth,
-          itemHeight: itemHeight,
-          itemGap: itemGap,
-          left: legendLeft,
-          top: legendTop,
-          data: legendData
+          icon: "circle",
+          itemWidth: 12,
+          itemHeight: 12,
+          itemGap: 15,
+          left: 0,
+          top: 0,
+          data: barData.legendData
         },
         color: barData.color,
         xAxis: {
@@ -188,13 +77,13 @@ export default {
           axisLabel: {
             show: true,
             textStyle: {
-              fontSize: fontXy,
-              color: "#c3edd7"
+              fontSize: 12,
+              color: this.white
             }
           },
           axisLine: {
             lineStyle: {
-              color: "#33403E"
+              color: "#636D6C"
             }
           },
           data: barData.xData
@@ -204,35 +93,35 @@ export default {
           name: barData.yName || "",
           nameLocation: "end",
           nameTextStyle: {
-            color: this.lgreen,
-            fontSize: fontXy,
-            align: "right",
-            verticalAlign: "middle"
+            color: this.white,
+            fontSize: 12,
+            align: "right"
+            // verticalAlign: "middle"
           },
           axisLabel: {
             show: true,
             textStyle: {
-              fontSize: fontXy,
-              color: "#c3edd7"
+              fontSize: 12,
+              color: this.white
             }
           },
           axisLine: {
             lineStyle: {
-              color: "#33403E"
+              color: "#636D6C"
             }
           },
           splitLine: {
             show: true,
             lineStyle: {
-              color: "#33403E"
+              color: "#636D6C"
             }
           }
         },
         grid: {
-          top: "20%",
-          left: "0",
+          top: "25%",
+          left: "2%",
           right: "0",
-          bottom: "10%",
+          bottom: "5%",
           containLabel: true
         },
         series: series

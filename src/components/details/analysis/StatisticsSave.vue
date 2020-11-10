@@ -1,8 +1,10 @@
 <template>
   <div class="common-box">
-    <div class="common-title">省钱统计</div>
+    <div class="common-title">
+      <img src="../../../assets/img/analysis-title3.png" alt="" />
+    </div>
     <div class="date-controller">
-      <div class="controller-item date-wrapper">
+      <div class="date-wrapper">
         <div
           class="date-item"
           :class="{ active: curDate === item.val }"
@@ -17,10 +19,12 @@
         <div class="tab-box" v-show="curDate === 0">
           <el-date-picker v-model="month1" type="month" placeholder="选择月">
           </el-date-picker>
+          <div class="triangle"></div>
         </div>
         <div class="tab-box" v-show="curDate === 1">
           <el-date-picker v-model="day" type="date" placeholder="选择日期">
           </el-date-picker>
+          <div class="triangle"></div>
         </div>
       </div>
     </div>
@@ -65,7 +69,10 @@ export default {
     };
   },
   computed: {
-    ...mapState(["monthList"])
+    ...mapState({
+      monthList: state => state.monthList,
+      white: state => state.color.white
+    })
   },
   components: {
     Eline: () => import("@/components/echarts/Eline")
@@ -76,10 +83,10 @@ export default {
       this.echarts1 = {
         id: "echarts1",
         title: "",
-        legendShow: true,
+        legendShow: false,
         legendData: ["外来电"],
-        color: ["yellow"],
-        areaColor: false,
+        color: [this.white],
+        areaColor: true,
         smooth: true,
         xData: [1, 2, 3, 4, 5],
         yName: "(kW) ",
@@ -88,10 +95,10 @@ export default {
       this.echarts2 = {
         id: "echarts2",
         title: "",
-        legendShow: true,
+        legendShow: false,
         legendData: ["外来电"],
-        color: ["yellow"],
-        areaColor: false,
+        color: [this.white],
+        areaColor: true,
         smooth: true,
         xData: [1, 2, 3, 4, 5],
         yName: "(kW) ",
@@ -100,10 +107,10 @@ export default {
       this.echarts3 = {
         id: "echarts3",
         title: "",
-        legendShow: true,
+        legendShow: false,
         legendData: ["外来电"],
-        color: ["yellow"],
-        areaColor: false,
+        color: [this.white],
+        areaColor: true,
         smooth: true,
         xData: [1, 2, 3, 4, 5],
         yName: "(kW) ",
@@ -112,10 +119,10 @@ export default {
       this.echarts4 = {
         id: "echarts4",
         title: "",
-        legendShow: true,
+        legendShow: false,
         legendData: ["外来电"],
-        color: ["yellow"],
-        areaColor: false,
+        color: [this.white],
+        areaColor: true,
         smooth: true,
         xData: [1, 2, 3, 4, 5],
         yName: "(kW) ",
@@ -148,22 +155,54 @@ export default {
 </script>
 
 <style lang="stylus" scoped>
-.common-echarts-box
-  height: 15vh
+@import "~@/assets/css/common.styl"
+.date-controller >>> .el-input__inner
+  padding-left: 0.5vw!important
+  padding-right: 0!important
+  background-color: transparent!important
+  border: 1px solid transparent!important
+  color: #fff
+  height: 2.77778vh
+  line-height: 2.77778vh
+  background: rgba(255, 255, 255, 0.15)!important
+.date-controller >>> .el-input__prefix, .date-controller >>> .el-input__suffix
+  display: none
 .date-controller
+  margin-top: 1.388889vh
   display: flex
   justify-content: space-between
   align-items: center
   .controller-item
-    flex: 0 0 50%
-    width: 50%
-    &.date-wrapper
-      display: flex
-      align-items: center
-      .date-item
-        cursor: pointer
-        &.active
-          color: yellow
+    flex: 0 0 40%
+    width: 40%
     .tab-box
+      width: 100%
       position: relative
+      .el-date-editor
+        width: 100%
+        z-index: 1
+      .triangle
+        width: 2.77778vh
+        height: 2.77778vh
+        background-image: url("../../../assets/img/triangle.png")
+        background-size: 100% 100%
+        position: absolute
+        right: 0
+        top: 0
+  .date-wrapper
+    display: flex
+    align-items: center
+    .date-item
+      width: 4.16667vw
+      height: 2.77778vh
+      line-height: 2.77778vh
+      text-align: center
+      cursor: pointer
+      font-size: $font16
+      background-image: url("../../../assets/img/date-tab1.png")
+      background-size: 100% 100%
+      &.active
+        background-image: url("../../../assets/img/date-tab2.png")
+.common-echarts-box
+  height: 16vh
 </style>

@@ -89,12 +89,13 @@ export default {
     cursor: pointer
     display: flex
     justify-content: space-between
-    align-items: center
+    align-items: flex-end
     .item-icon
       width: 1.875vw
       height: 1.875vw
       background-size: 100% 100%
       margin-top: 1.852vh
+      z-index: 1
     &:nth-child(1)
       .item-icon
         background-image: url("../assets/img/map-icon11.png")
@@ -115,4 +116,14 @@ export default {
         background-image: url("../assets/img/map-icon41.png")
       .item-icon-active
         background-image: url("../assets/img/map-icon42.png")
+    .item-title
+      width: 5vw
+      text-align: center
+      height: 1.875vw
+      line-height: 1.875vw
+      background: #ddd
+      border-top-right-radius: 0.9325vw;
+      border-bottom-right-radius: 0.9325vw;
+      transform: translate(-0.5vw)
+      background: rgba(0,0,0,.4)
 </style>

@@ -16,10 +16,6 @@ export default {
       return this.lineData.data;
     },
     ...mapState({
-      green: state => state.color.green,
-      blue: state => state.color.blue,
-      yellow: state => state.color.yellow,
-      red: state => state.color.red,
       white: state => state.color.white
     })
   },
@@ -30,15 +26,10 @@ export default {
   },
   methods: {
     drawLine(lineData) {
-      let bodyWidth = document.body.offsetWidth;
       let series = [];
-      let seriesLength = lineData.legendData.length
-      let fontTitle = bodyWidth <= 1920 ? 14 : 16;
-      let fontXy = bodyWidth <= 1920 ? 9 : 12;
-      let lineWidth = 1.5;
+      let seriesLength = lineData.legendData.length;
       for (let i = 0; i < seriesLength; i++) {
         let areaStyle = null;
-        let dotted = "solid";
         if (lineData.areaColor) {
           areaStyle = {
             color: new this.$echarts.graphic.LinearGradient(0, 0, 0, 1, [
@@ -55,20 +46,6 @@ export default {
         } else {
           areaStyle = null;
         }
-        if (lineData.dotted) {
-          if (lineData.data.length === 1) {
-            dotted = "dotted";
-          } else {
-            if (i % 2 === 1) {
-              dotted = "dotted";
-              areaStyle = null;
-            } else {
-              dotted = "solid";
-            }
-          }
-        } else {
-          dotted = "solid";
-        }
         series.push({
           name: lineData.legendData[i],
           data: lineData.data[i],
@@ -81,8 +58,8 @@ export default {
             normal: {
               areaStyle: areaStyle,
               lineStyle: {
-                width: lineWidth,
-                type: dotted,
+                width: 1.5,
+                type: "solid",
                 color: lineData.color[i]
               }
             },
@@ -96,16 +73,15 @@ export default {
           name: lineData.yName || "",
           nameLocation: "end",
           nameTextStyle: {
-            color: "#fff",
-            fontSize: fontXy,
+            color: this.white,
+            fontSize: 12,
             align: "right",
             verticalAlign: "bottom"
-            // paddingBottom: -5
           },
           axisLabel: {
             show: true,
             textStyle: {
-              fontSize: fontXy,
+              fontSize: 12,
               color: this.white
             }
           },
@@ -126,7 +102,7 @@ export default {
         {
           show: lineData.legendShow,
           textStyle: {
-            fontSize: fontXy,
+            fontSize: 12,
             color: this.white
           },
           itemWidth: 15,
@@ -141,8 +117,8 @@ export default {
         title: {
           text: lineData.title,
           textStyle: {
-            color: "#fff",
-            fontSize: fontTitle
+            color: this.white,
+            fontSize: 16
           },
           top: lineData.titleTop,
           left: lineData.titleLeft,
@@ -156,21 +132,18 @@ export default {
         color: lineData.color,
         grid: {
           top: "25%",
-          left: "5%",
-          right: "5%",
+          left: "2%",
+          right: "2%",
           bottom: "5%",
           containLabel: true
         },
         xAxis: {
           type: "category",
-          boundaryGap: true,
+          boundaryGap: false,
           axisLabel: {
             show: true,
-            // showMixLabel: true,
-            // showMaxLabel: true,
-            // interval: 0, // x轴文字显示完全
             textStyle: {
-              fontSize: fontXy,
+              fontSize: 12,
               color: this.white
             }
           },

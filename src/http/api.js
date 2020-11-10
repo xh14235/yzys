@@ -30,3 +30,31 @@ export const getAbnormalMonitoring = params =>
 // 获取能量累计值
 export const getAllEnergyNum = params =>
   axios.get("/energy/api/supply/accumulative", params);
+
+// 获取能源种类数据 冷热热水
+export const getSingleEnergyNum = params => {
+  return axios({
+    url: "/energy/api/supply/current/getEnergyCategory",
+    method: "GET",
+    params: params
+  });
+};
+
+// 获取能源种类数据 电
+export const getElectricNum = params =>
+  axios.get("/energy/api/supply/current/getKindElectricity", params);
+
+// 能源消费板块
+
+// 获取能量累计值
+export const getConsumerAllEnergyNum = params =>
+  axios.get("/energy/api/consumer/accumulative", params);
+
+// 获取能源种类数据 冷热水电
+export const getConsumerEnergyNum = params => {
+  return axios({
+    url: "/energy/api/consumer/building/getEnergyType",
+    method: "GET",
+    params: params
+  });
+};

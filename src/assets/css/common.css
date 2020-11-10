@@ -14,12 +14,10 @@
   margin-bottom: 1.94444vh;
 }
 .common-title{
-  width: 8.75vw;
   height: 3.8888889vh;
   margin-bottom: 0.463vh;
 }
 .common-title img{
-  width: 100%;
   height: 100%;
   vertical-align: bottom;
 }
@@ -49,7 +47,7 @@
 }
 .common-echarts-box{
   width: 100%;
-  height: 20vh;
+  height: 15vh;
 }
 
 /* 字体 */
@@ -60,3 +58,11 @@
 .num{
   font-family: myFont;
 }
+
+.el-date-table td.next-month span, .el-date-table td.prev-month span{
+  color: #999!important;
+}
+.el-date-table td.available span{
+  color: #111!important;
+}
+ 

@@ -1,6 +1,8 @@
 <template>
   <div class="common-box">
-    <div class="common-title">供热统计</div>
+    <div class="common-title">
+      <img src="../../../assets/img/supply-title6.png" alt="" />
+    </div>
     <div class="common-echarts-box">
       <Eline :lineData="echarts" v-if="echarts.id"></Eline>
     </div>
@@ -8,30 +10,48 @@
 </template>
 
 <script>
+import { getSingleEnergyNum } from "@/http/api";
+import { mapState } from "vuex";
 export default {
-  name: "StatisticsHot",
+  name: "StatisticsElectric",
   data() {
     return {
       echarts: {}
     };
+  },
+  computed: {
+    ...mapState({
+      red: state => state.color.red
+    })
   },
   components: {
     Eline: () => import("@/components/echarts/Eline")
   },
   methods: {
     getEchartsData() {
-      this.echarts = {
-        id: "statisticsHot",
-        title: "",
-        legendShow: true,
-        legendData: ["外来电"],
-        color: ["yellow"],
-        areaColor: false,
-        smooth: true,
-        xData: [1, 2, 3, 4, 5],
-        yName: "(kW) ",
-        data: [[11, 32, 23, 42, 35]]
-      };
+      getSingleEnergyNum({
+        type: "HOT"
+      }).then(res => {
+        let data = res.data.data.slice(-24);
+        let xData = data.map(item => {
+          return item.hourValue - 1;
+        });
+        let yData = data.map(item => {
+          return item.value;
+        });
+        this.echarts = {
+          id: "statisticsHot",
+          title: "",
+          legendShow: false,
+          legendData: ["供热统计"],
+          color: [this.red],
+          areaColor: true,
+          smooth: true,
+          xData: xData,
+          yName: "(kWh) ",
+          data: [yData]
+        };
+      });
     }
   },
   mounted() {

@@ -1,16 +1,20 @@
 <template>
   <div class="common-box">
-    <div class="common-title">能耗对比</div>
+    <div class="common-title">
+      <img src="../../../assets/img/analysis-title2.png" alt="" />
+    </div>
     <div class="month-box">
       <div class="month-item">
         <span>月份一</span>
         <el-date-picker v-model="month1" type="month" placeholder="选择月">
         </el-date-picker>
+        <div class="triangle"></div>
       </div>
       <div class="month-item">
         <span>月份二</span>
         <el-date-picker v-model="month2" type="month" placeholder="选择月">
         </el-date-picker>
+        <div class="triangle"></div>
       </div>
     </div>
     <div class="common-echarts-box">
@@ -35,7 +39,11 @@ export default {
     };
   },
   computed: {
-    ...mapState(["monthList"])
+    ...mapState({
+      monthList: state => state.monthList,
+      yellow: state => state.color.yellow,
+      green: state => state.color.green
+    })
   },
   components: {
     Ebar: () => import("@/components/echarts/Ebar")
@@ -47,9 +55,10 @@ export default {
         title: "",
         legendShow: true,
         legendData: [this.legend1, this.legend2],
-        color: ["red", "blue"],
+        color: [this.yellow, this.green],
         xData: ["电", "热水", "冷", "热"],
-        data: [this.list1, this.list2]
+        data: [this.list1, this.list2],
+        yName: "(kWh)"
       };
     },
     // 获取当前月份及上个月份
@@ -119,15 +128,41 @@ export default {
 </script>
 
 <style lang="stylus" scoped>
+.month-box >>> .el-input__inner
+  padding-left: 0.5vw!important
+  padding-right: 0!important
+  background-color: transparent!important
+  border: 1px solid transparent!important
+  color: #fff
+  height: 2.77778vh
+  line-height: 2.77778vh
+  background: rgba(255, 255, 255, 0.15)!important
+.month-box >>> .el-input__prefix, .month-box >>> .el-input__suffix
+  display: none
 .month-box
   display: flex
   align-items: center
+  justify-content: space-between
+  margin: 1.388889vh 0
   .month-item
-    flex: 0 0 50%
-    width: 50%
+    flex: 0 0 45%
+    width: 45%
     display: flex
     align-items: center
+    justify-content: space-between
+    position: relative
     .el-date-editor
-      flex: 0 0 60%
-      width: 60%
+      flex: 0 0 70%
+      width: 70%
+      z-index: 1
+    .triangle
+      width: 2.77778vh
+      height: 2.77778vh
+      background-image: url("../../../assets/img/triangle.png")
+      background-size: 100% 100%
+      position: absolute
+      right: 0
+      top: 0
+.common-echarts-box
+  height: 20vh
 </style>

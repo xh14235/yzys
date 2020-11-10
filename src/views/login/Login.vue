@@ -39,7 +39,7 @@
 </template>
 
 <script>
-import { login } from "../../http/api";
+import { login } from "@/http/api";
 import { mapMutations } from "vuex";
 export default {
   name: "Login",
