@@ -4,11 +4,13 @@ import Vuex from "vuex";
 import color from "./color";
 import font from "./font";
 
-Vue.use(Vuex);
+let defaultToken = localStorage.token || "";
 
+Vue.use(Vuex);
+// 能源供给及能源消费页面 累计能量值及能源占比图数据请求
 export default new Vuex.Store({
   state: {
-    token: "",
+    token: defaultToken,
     weather: "",
     pm25: "",
     humidity: "",
@@ -25,57 +27,8 @@ export default new Vuex.Store({
       Consume: ["left01", "left02", "left03", "right01", "right02", "right03"],
       Analysis: ["left01", "left02", "right01"]
     },
-    // 月份
-    monthList: [
-      {
-        title: "一月",
-        val: 1
-      },
-      {
-        title: "二月",
-        val: 2
-      },
-      {
-        title: "三月",
-        val: 3
-      },
-      {
-        title: "四月",
-        val: 4
-      },
-      {
-        title: "五月",
-        val: 5
-      },
-      {
-        title: "六月",
-        val: 6
-      },
-      {
-        title: "七月",
-        val: 7
-      },
-      {
-        title: "八月",
-        val: 8
-      },
-      {
-        title: "九月",
-        val: 9
-      },
-      {
-        title: "十月",
-        val: 10
-      },
-      {
-        title: "十一月",
-        val: 11
-      },
-      {
-        title: "十二月",
-        val: 12
-      }
-    ]
+    supplyData: {},
+    consumeData: {}
   },
   mutations: {
     changeMapTab(state, index) {
@@ -87,7 +40,6 @@ export default new Vuex.Store({
     mutLogin(state, token) {
       state.token = token;
       localStorage.token = token;
-      console.log(state.token);
     },
     mutWeather(state, weather) {
       state.pm25 = weather.pm25;
@@ -95,6 +47,12 @@ export default new Vuex.Store({
       state.pressure = weather.pressure;
       state.tem = weather.tem;
       state.weather = weather.weather;
+    },
+    mutSupplyData(state, data) {
+      state.supplyData = data;
+    },
+    mutConsumeData(state, data) {
+      state.consumeData = data;
     }
   },
   actions: {},

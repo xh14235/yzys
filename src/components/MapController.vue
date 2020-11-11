@@ -117,13 +117,10 @@ export default {
       .item-icon-active
         background-image: url("../assets/img/map-icon42.png")
     .item-title
-      width: 5vw
-      text-align: center
+      width: 5.208vw
+      padding-left: 0.729vw
       height: 1.875vw
       line-height: 1.875vw
-      background: #ddd
-      border-top-right-radius: 0.9325vw;
-      border-bottom-right-radius: 0.9325vw;
-      transform: translate(-0.5vw)
-      background: rgba(0,0,0,.4)
+      background-image: url("../assets/img/controller-bg.png")
+      background-size: 100% 100%
 </style>

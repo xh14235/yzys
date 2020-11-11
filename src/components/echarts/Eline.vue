@@ -118,7 +118,8 @@ export default {
           text: lineData.title,
           textStyle: {
             color: this.white,
-            fontSize: 16
+            fontSize: 14,
+            fontWeight: "normal"
           },
           top: lineData.titleTop,
           left: lineData.titleLeft,
@@ -132,8 +133,8 @@ export default {
         color: lineData.color,
         grid: {
           top: "25%",
-          left: "2%",
-          right: "2%",
+          left: "5%",
+          right: "5%",
           bottom: "5%",
           containLabel: true
         },

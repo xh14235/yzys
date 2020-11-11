@@ -24,7 +24,8 @@ export default {
       blue: state => state.color.blue,
       yellow: state => state.color.yellow,
       red: state => state.color.red,
-      white: state => state.color.white
+      white: state => state.color.white,
+      supplyData: state => state.supplyData
     })
   },
   components: {
@@ -45,10 +46,10 @@ export default {
         center: ["30%", "50%"],
         color: [this.green, this.yellow, this.blue, this.red],
         data: [
-          { value: 11, name: "电" },
-          { value: 22, name: "热水" },
-          { value: 14, name: "冷" },
-          { value: 25, name: "热" }
+          { value: Math.floor(this.supplyData.electricity) || 0, name: "电" },
+          { value: Math.floor(this.supplyData.hotWater) || 0, name: "热水" },
+          { value: Math.floor(this.supplyData.cold) || 0, name: "冷" },
+          { value: Math.floor(this.supplyData.hot) || 0, name: "热" }
         ]
       };
     }

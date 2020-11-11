@@ -24,7 +24,8 @@ export default {
       blue: state => state.color.blue,
       yellow: state => state.color.yellow,
       red: state => state.color.red,
-      white: state => state.color.white
+      white: state => state.color.white,
+      consumeData: state => state.consumeData
     })
   },
   components: {
@@ -34,8 +35,8 @@ export default {
     getEchartsData() {
       this.echarts = {
         id: "consumption_head2",
-        name: "供能比例",
-        title: "供能比例",
+        name: "用能比例",
+        title: "用能比例",
         titleTop: "40%",
         titleLeft: "28%",
         legendShow: true,
@@ -45,10 +46,10 @@ export default {
         center: ["30%", "50%"],
         color: [this.green, this.yellow, this.blue, this.red],
         data: [
-          { value: 11, name: "电" },
-          { value: 22, name: "热水" },
-          { value: 14, name: "冷" },
-          { value: 25, name: "热" }
+          { value: Math.floor(this.consumeData.ELECTRICITY) || 0, name: "电" },
+          { value: Math.floor(this.consumeData.HOT_WATER) || 0, name: "热水" },
+          { value: Math.floor(this.consumeData.COLD) || 0, name: "冷" },
+          { value: Math.floor(this.consumeData.HOT) || 0, name: "热" }
         ]
       };
     }

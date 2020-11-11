@@ -6,6 +6,7 @@ import echarts from "echarts";
 import "./plugins/element.js";
 // rsa加密
 import JSEncrypt from "jsencrypt";
+// import VueJsonp from "jsonp";
 
 import "@/assets/css/reset.css";
 import "@/assets/css/common.css";
@@ -23,6 +24,7 @@ Vue.prototype.$getRsaCode = str => {
 
 Vue.config.productionTip = false;
 Vue.prototype.$echarts = echarts;
+// Vue.use(VueJsonp);
 
 new Vue({
   router,

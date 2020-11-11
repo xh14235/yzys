@@ -21,7 +21,7 @@
 </template>
 
 <script>
-import { getConsumerAllEnergyNum } from "@/http/api";
+import { mapState } from "vuex";
 export default {
   name: "EnergyAll",
   data() {
@@ -29,32 +29,33 @@ export default {
       energyList: []
     };
   },
+  computed: {
+    ...mapState(["consumeData"])
+  },
   methods: {
     getList() {
-      getConsumerAllEnergyNum().then(({ data }) => {
-        this.energyList = [
-          {
-            title: "用电",
-            icon: require("../../../assets/img/supply-electric.png"),
-            num: Math.floor(data.data.ELECTRICITY)
-          },
-          {
-            title: "用热水",
-            icon: require("../../../assets/img/supply-hotwater.png"),
-            num: Math.floor(data.data.HOT_WATER)
-          },
-          {
-            title: "用冷",
-            icon: require("../../../assets/img/supply-cold.png"),
-            num: Math.floor(data.data.COLD)
-          },
-          {
-            title: "用热",
-            icon: require("../../../assets/img/supply-hot.png"),
-            num: Math.floor(data.data.HOT)
-          }
-        ];
-      });
+      this.energyList = [
+        {
+          title: "用电",
+          icon: require("../../../assets/img/supply-electric.png"),
+          num: Math.floor(this.consumeData.ELECTRICITY) || 0
+        },
+        {
+          title: "用热水",
+          icon: require("../../../assets/img/supply-hotwater.png"),
+          num: Math.floor(this.consumeData.HOT_WATER) || 0
+        },
+        {
+          title: "用冷",
+          icon: require("../../../assets/img/supply-cold.png"),
+          num: Math.floor(this.consumeData.COLD) || 0
+        },
+        {
+          title: "用热",
+          icon: require("../../../assets/img/supply-hot.png"),
+          num: Math.floor(this.consumeData.HOT) || 0
+        }
+      ];
     }
   },
   mounted() {

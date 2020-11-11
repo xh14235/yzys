@@ -4,7 +4,7 @@
       <img src="../../../assets/img/manage-title4.png" alt="" />
     </div>
     <div class="common-echarts-box">
-      <Eline :lineData="echarts"></Eline>
+      <Eline :lineData="echarts" v-if="echarts.id"></Eline>
     </div>
     <div class="info-wrapper">
       <div class="info-box">
@@ -79,6 +79,7 @@ export default {
 @import '~@/assets/css/common.styl'
 .common-echarts-box
   margin-top: 2.3148vh
+  height: 20vh
 .info-wrapper
   display: flex
   justify-content: space-between

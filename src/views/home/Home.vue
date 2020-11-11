@@ -15,6 +15,8 @@
 </template>
 
 <script>
+import { getAllEnergyNum, getConsumerAllEnergyNum } from "@/http/api";
+import { mapMutations } from "vuex";
 export default {
   name: "Home",
   components: {
@@ -23,6 +25,23 @@ export default {
     HomeRight: () => import("./components/HomeRight"),
     HomeTab: () => import("./components/HomeTab"),
     MapController: () => import("@/components/MapController")
+  },
+  methods: {
+    ...mapMutations(["mutSupplyData", "mutConsumeData"]),
+    getSupplyList() {
+      getAllEnergyNum().then(res => {
+        this.mutSupplyData(res.data.data);
+      });
+    },
+    getConsumeList() {
+      getConsumerAllEnergyNum().then(res => {
+        this.mutConsumeData(res.data.data);
+      });
+    }
+  },
+  mounted() {
+    this.getSupplyList();
+    this.getConsumeList();
   }
 };
 </script>
@@ -32,9 +51,8 @@ export default {
 .home-wrapper
   width: 100vw
   height: 100vh
-  padding 0 1.5625vw
+  padding: 0 1.5625vw
   overflow: hidden
-  // background: #111
   background-image: url('../../assets/img/bg.jpg')
   background-size: cover
   display: flex

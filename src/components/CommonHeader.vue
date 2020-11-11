@@ -18,7 +18,7 @@
 <script>
 // import { weather } from "@/http/api";
 import { mapState, mapMutations } from "vuex";
-import axios from "axios";
+// import axios from "axios";
 export default {
   name: "CommonHeader",
   data() {
@@ -50,23 +50,38 @@ export default {
       setInterval(this.getTime, 1000);
     },
     getWeather() {
-      axios
-        .get(
-          "https://tianqiapi.com/api?version=v6&appid=95555958&appsecret=Fjprg6Px"
-        )
-        .then(res => {
-          // console.log(res);
-          // this.weather = res.data.wea;
-          // this.pm25 = res.data.air_pm25;
-          // this.tem = res.data.tem;
-          let weather = {};
-          weather.weather = res.data.wea;
-          weather.pm25 = res.data.air_pm25;
-          weather.tem = res.data.tem;
-          weather.humidity = res.data.humidity;
-          weather.pressure = res.data.pressure;
-          this.mutWeather(weather);
-        });
+      const jsonp = require("jsonp");
+      jsonp(
+        "https://tianqiapi.com/api?version=v6&appid=95555958&appsecret=Fjprg6Px",
+        null,
+        (err, data) => {
+          if (err) {
+            console.error(err.message);
+          } else {
+            // console.log(data);
+            let weather = {};
+            weather.weather = data.wea;
+            weather.pm25 = data.air_pm25;
+            weather.tem = data.tem;
+            weather.humidity = data.humidity;
+            weather.pressure = data.pressure;
+            this.mutWeather(weather);
+          }
+        }
+      );
+      // axios
+      //   .get(
+      //     "https://tianqiapi.com/api?version=v6&appid=95555958&appsecret=Fjprg6Px"
+      //   )
+      //   .then(res => {
+      //     let weather = {};
+      //     weather.weather = res.data.wea;
+      //     weather.pm25 = res.data.air_pm25;
+      //     weather.tem = res.data.tem;
+      //     weather.humidity = res.data.humidity;
+      //     weather.pressure = res.data.pressure;
+      //     this.mutWeather(weather);
+      //   });
       // weather({
       //   version: "v1",
       //   appid: "95555958",
