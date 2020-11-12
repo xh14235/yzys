@@ -56,5 +56,5 @@ export default {
   flex: 0 0 25%
   width: 25%
 .table-body
-  height: 25vh
+  height: 20vh
 </style>

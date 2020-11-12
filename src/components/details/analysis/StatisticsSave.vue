@@ -29,21 +29,22 @@
       </div>
     </div>
     <div class="common-echarts-box">
-      <Eline :lineData="echarts1"></Eline>
+      <Eline :lineData="echarts1" v-if="echarts1.id"></Eline>
     </div>
     <div class="common-echarts-box">
-      <Eline :lineData="echarts2"></Eline>
+      <Eline :lineData="echarts2" v-if="echarts2.id"></Eline>
     </div>
     <div class="common-echarts-box">
-      <Eline :lineData="echarts3"></Eline>
+      <Eline :lineData="echarts3" v-if="echarts3.id"></Eline>
     </div>
     <div class="common-echarts-box">
-      <Eline :lineData="echarts4"></Eline>
+      <Eline :lineData="echarts4" v-if="echarts4.id"></Eline>
     </div>
   </div>
 </template>
 
 <script>
+import { getEnergySavingTrend } from "@/http/api";
 import { mapState } from "vuex";
 export default {
   name: "StatisticsSave",
@@ -78,93 +79,123 @@ export default {
     Eline: () => import("@/components/echarts/Eline")
   },
   methods: {
-    getEchartsData(month) {
-      console.log(month);
-      this.echarts1 = {
-        id: "echarts1",
-        title: "",
-        legendShow: false,
-        legendData: ["外来电"],
-        color: [this.white],
-        areaColor: true,
-        smooth: true,
-        xData: [1, 2, 3, 4, 5],
-        yName: "(kW) ",
-        data: [[11, 32, 23, 42, 35]]
-      };
-      this.echarts2 = {
-        id: "echarts2",
-        title: "",
-        legendShow: false,
-        legendData: ["外来电"],
-        color: [this.white],
-        areaColor: true,
-        smooth: true,
-        xData: [1, 2, 3, 4, 5],
-        yName: "(kW) ",
-        data: [[11, 32, 23, 42, 35]]
-      };
-      this.echarts3 = {
-        id: "echarts3",
-        title: "",
-        legendShow: false,
-        legendData: ["外来电"],
-        color: [this.white],
-        areaColor: true,
-        smooth: true,
-        xData: [1, 2, 3, 4, 5],
-        yName: "(kW) ",
-        data: [[11, 32, 23, 42, 35]]
-      };
-      this.echarts4 = {
-        id: "echarts4",
-        title: "",
-        legendShow: false,
-        legendData: ["外来电"],
-        color: [this.white],
-        areaColor: true,
-        smooth: true,
-        xData: [1, 2, 3, 4, 5],
-        yName: "(kW) ",
-        data: [[11, 32, 23, 42, 35]]
-      };
+    getEchartsData(dateType, date) {
+      let year = date.getFullYear();
+      let month = date.getMonth() + 1;
+      month = month > 9 ? month : "0" + month;
+      let day = date.getDate();
+      day = day > 9 ? day : "0" + day;
+      date = year + "-" + month + "-" + day;
+      getEnergySavingTrend({
+        date,
+        dateType
+      }).then(res => {
+        let data = res.data.data;
+        let xData = data.Cold.map(item => {
+          return item.commonValue;
+        });
+        let yData1 = data.Electricity.map(item => {
+          return item.value;
+        });
+        let yData2 = data.HotWater.map(item => {
+          return item.value;
+        });
+        let yData3 = data.Cold.map(item => {
+          return item.value;
+        });
+        let yData4 = data.Hot.map(item => {
+          return item.value;
+        });
+        this.echarts1 = {
+          id: "echarts1",
+          title: "节约电",
+          legendShow: false,
+          legendData: ["外来电"],
+          color: [this.white],
+          areaColor: true,
+          smooth: true,
+          xData: xData,
+          yName: "(kWh)",
+          data: [yData1]
+        };
+        this.echarts2 = {
+          id: "echarts2",
+          title: "节约热水",
+          legendShow: false,
+          legendData: ["外来电"],
+          color: [this.white],
+          areaColor: true,
+          smooth: true,
+          xData: xData,
+          yName: "(kWh)",
+          data: [yData2]
+        };
+        this.echarts3 = {
+          id: "echarts3",
+          title: "节约冷",
+          legendShow: false,
+          legendData: ["外来电"],
+          color: [this.white],
+          areaColor: true,
+          smooth: true,
+          xData: xData,
+          yName: "(kWh)",
+          data: [yData3]
+        };
+        this.echarts4 = {
+          id: "echarts4",
+          title: "节约热",
+          legendShow: false,
+          legendData: ["外来电"],
+          color: [this.white],
+          areaColor: true,
+          smooth: true,
+          xData: xData,
+          yName: "(kWh)",
+          data: [yData4]
+        };
+      });
     },
     changeTab(index) {
       this.curDate = index;
-      this.getEchartsData(this.month);
-    },
-    // 获取当前月
-    getNowMonth() {
-      let date = new Date();
-      this.month = date.getMonth() + 1;
+      if (this.curDate === 0) {
+        this.getEchartsData("month", this.month1);
+      } else {
+        this.getEchartsData("day", this.day);
+      }
     }
+    // 获取当前月
+    // getNowMonth() {
+    //   let date = new Date();
+    //   this.month = date.getMonth() + 1;
+    // }
   },
   watch: {
     month1() {
-      this.getEchartsData(this.month1);
+      this.getEchartsData("month", this.month1);
     },
     day() {
-      this.getEchartsData(this.day);
+      this.getEchartsData("day", this.day);
     }
   },
   mounted() {
-    this.getNowMonth();
-    this.getEchartsData(this.month);
+    // this.getNowMonth();
+    this.getEchartsData("month", this.month1);
   }
 };
 </script>
 
 <style lang="stylus" scoped>
-@import "~@/assets/css/common.styl"
+@import '~@/assets/css/common.styl'
 .date-controller >>> .el-input__inner
-  padding-left: 0.5vw!important
-  padding-right: 0!important
-  background-color: transparent!important
-  border: 1px solid transparent!important
+  padding-left: 0.5vw !important
+  padding-right: 0 !important
+  background-color: transparent !important
+  border: 1px solid transparent !important
   color: #fff
   height: 2.77778vh
   line-height: 2.77778vh
-  background: rgba(255, 255, 255, 0.15)!important
+  background: rgba(255, 255, 255, 0.15) !important
 .date-controller >>> .el-input__prefix, .date-controller >>> .el-input__suffix
   display: none
 .date-controller
@@ -184,7 +215,7 @@ export default {
       .triangle
         width: 2.77778vh
         height: 2.77778vh
-        background-image: url("../../../assets/img/triangle.png")
+        background-image: url('../../../assets/img/triangle.png')
         background-size: 100% 100%
         position: absolute
         right: 0
@@ -199,10 +230,10 @@ export default {
       text-align: center
       cursor: pointer
       font-size: $font16
-      background-image: url("../../../assets/img/date-tab1.png")
+      background-image: url('../../../assets/img/date-tab1.png')
       background-size: 100% 100%
       &.active
-        background-image: url("../../../assets/img/date-tab2.png")
+        background-image: url('../../../assets/img/date-tab2.png')
 .common-echarts-box
   height: 16vh
 </style>

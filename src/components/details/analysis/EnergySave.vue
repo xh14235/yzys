@@ -18,12 +18,13 @@
       </div>
     </div>
     <div class="common-echarts-box">
-      <Ebar :barData="echarts"></Ebar>
+      <Ebar :barData="echarts" v-if="echarts.id"></Ebar>
     </div>
   </div>
 </template>
 
 <script>
+import { getEnergyComparison } from "@/http/api";
 import { mapState } from "vuex";
 export default {
   name: "EnergySave",
@@ -40,7 +41,6 @@ export default {
   },
   computed: {
     ...mapState({
-      monthList: state => state.monthList,
       yellow: state => state.color.yellow,
       green: state => state.color.green
     })
@@ -73,21 +73,29 @@ export default {
       this.month1 = new Date(year + "-" + month);
     },
     // 获取单个月份的数据，数组
-    getMonthData(e, month) {
-      let yearNum = new Date(month).getFullYear();
-      let monthNum = new Date(month).getMonth() + 1;
-      // axios,传入month请求数据
-      let list = [];
-      for (let i = 0; i < 4; i++) {
-        list.push(Math.floor(Math.random() * 100));
-      }
-      if (e) {
-        this.list2 = list;
-        this.legend2 = yearNum + "-" + monthNum;
-      } else {
-        this.list1 = list;
-        this.legend1 = yearNum + "-" + monthNum;
-      }
+    getMonthData(e, date) {
+      let year = date.getFullYear();
+      let month = date.getMonth() + 1;
+      month = month > 9 ? month : "0" + month;
+      let day = date.getDate();
+      day = day > 9 ? day : "0" + day;
+      date = year + "-" + month + "-" + day;
+      getEnergyComparison({
+        date,
+        dateType: "month"
+      }).then(res => {
+        let data = res.data.data;
+        let list = [data.Electricity, data.HotWater, data.Cold, data.Hot];
+        let yearNum = new Date(date).getFullYear();
+        let monthNum = new Date(date).getMonth() + 1;
+        if (e) {
+          this.list2 = list;
+          this.legend2 = yearNum + "-" + monthNum;
+        } else {
+          this.list1 = list;
+          this.legend1 = yearNum + "-" + monthNum;
+        }
+      });
     },
     getYearMonth(d1, d2) {
       let date1 = new Date(d1);
@@ -129,14 +137,14 @@ export default {
 
 <style lang="stylus" scoped>
 .month-box >>> .el-input__inner
-  padding-left: 0.5vw!important
-  padding-right: 0!important
-  background-color: transparent!important
-  border: 1px solid transparent!important
+  padding-left: 0.5vw !important
+  padding-right: 0 !important
+  background-color: transparent !important
+  border: 1px solid transparent !important
   color: #fff
   height: 2.77778vh
   line-height: 2.77778vh
-  background: rgba(255, 255, 255, 0.15)!important
+  background: rgba(255, 255, 255, 0.15) !important
 .month-box >>> .el-input__prefix, .month-box >>> .el-input__suffix
   display: none
 .month-box
@@ -145,8 +153,8 @@ export default {
   justify-content: space-between
   margin: 1.388889vh 0
   .month-item
-    flex: 0 0 45%
-    width: 45%
+    flex: 0 0 48%
+    width: 48%
     display: flex
     align-items: center
     justify-content: space-between
@@ -158,7 +166,7 @@ export default {
     .triangle
       width: 2.77778vh
       height: 2.77778vh
-      background-image: url("../../../assets/img/triangle.png")
+      background-image: url('../../../assets/img/triangle.png')
       background-size: 100% 100%
       position: absolute
       right: 0

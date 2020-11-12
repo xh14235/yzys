@@ -35,6 +35,9 @@ export default {
   },
   methods: {
     drawBar(barData) {
+      let bodyWidth = document.body.offsetWidth;
+      let font1 = bodyWidth > 1600 ? 12 : 10;
+      let font2 = bodyWidth > 1600 ? 16 : 12;
       let series = [];
       let seriesLength = barData.legendData.length;
       for (let i = 0; i < seriesLength; i++) {
@@ -42,7 +45,7 @@ export default {
           name: barData.legendData[i],
           data: barData.data[i],
           type: "bar",
-          barWidth: 10
+          barWidth: 15
         });
       }
       let myChart = this.$echarts.init(document.getElementById(barData.id));
@@ -51,7 +54,7 @@ export default {
           text: barData.title,
           textStyle: {
             color: this.white,
-            fontSize: 16
+            fontSize: font2
           }
         },
         tooltip: {
@@ -60,7 +63,7 @@ export default {
         legend: {
           show: barData.legendShow,
           textStyle: {
-            fontSize: 12,
+            fontSize: font2,
             color: this.white
           },
           icon: "circle",
@@ -77,7 +80,7 @@ export default {
           axisLabel: {
             show: true,
             textStyle: {
-              fontSize: 12,
+              fontSize: font1,
               color: this.white
             }
           },
@@ -94,14 +97,14 @@ export default {
           nameLocation: "end",
           nameTextStyle: {
             color: this.white,
-            fontSize: 12,
-            align: "right"
-            // verticalAlign: "middle"
+            fontSize: font1,
+            align: "right",
+            verticalAlign: "top"
           },
           axisLabel: {
             show: true,
             textStyle: {
-              fontSize: 12,
+              fontSize: font1,
               color: this.white
             }
           },

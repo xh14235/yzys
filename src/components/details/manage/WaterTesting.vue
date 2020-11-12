@@ -88,8 +88,8 @@ export default {
     height: 7.13vh
     width: 1px
   .info-box
-    flex: 0 0 20%
-    width: 20%
+    flex: 0 0 25%
+    width: 25%
     display: flex
     align-items: center
     justify-content: space-between

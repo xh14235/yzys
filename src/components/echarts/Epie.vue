@@ -32,11 +32,13 @@ export default {
   },
   methods: {
     drawPie(pieData) {
+      let bodyWidth = document.body.offsetWidth;
+      let font1 = bodyWidth > 1600 ? 14 : 12;
+      let font2 = bodyWidth > 1600 ? 16 : 14;
       let labelShow = true;
       if (pieData.labelShow === false) {
         labelShow = false;
       }
-
       let myChart = this.$echarts.init(document.getElementById(pieData.id));
       let option = {
         title: {
@@ -44,7 +46,7 @@ export default {
           textStyle: {
             color: this.white,
             fontWeight: "normal",
-            fontSize: 18
+            fontSize: font2
           },
           textAlign: "center",
           top: pieData.titleTop,
@@ -66,11 +68,12 @@ export default {
           show: pieData.legendShow,
           textStyle: {
             color: this.white,
-            fontSize: 14
+            fontSize: font1
           },
           icon: "bar",
           itemWidth: 12,
           itemHeight: 12,
+          itemGap: 2,
           orient: "vertical",
           right: 0,
           bottom: "center",
@@ -110,7 +113,7 @@ export default {
                 // return params.percent + parseInt(params.percent) + '%'
                 return parseInt(params.percent) + "%";
               },
-              fontSize: 14
+              fontSize: font1
             },
             labelLine: {
               show: pieData.labelShow,

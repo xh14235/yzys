@@ -1,5 +1,8 @@
 <template>
   <div class="home-left">
+    <div class="header-title">
+      <img src="../../../assets/img/logo.png" alt="" />
+    </div>
     <transition name="fade" mode="out-in">
       <keep-alive>
         <component :is="view"></component>
@@ -33,7 +36,16 @@ export default {
 <style scoped lang="stylus">
 @import '~@/assets/css/common.styl'
 .home-left
-  width: 20.8333vw
-  height: 'calc(100vh  - 2 * %s)' % $commonHeight
+  width: 22.3958vw
+  padding-left: 1.5625vw
+  background-image: url('../../../assets/img/bg-left.png')
+  background-size: 100% 100%
+  height: 'calc(100vh  - %s)' % $commonHeight
   overflow: hidden
+  .header-title
+    height: 8vh
+    img
+      height: 3.8888889vh
+      margin-top: 2vh
+      vertical-align: top
 </style>

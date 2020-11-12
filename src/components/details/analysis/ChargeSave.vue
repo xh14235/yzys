@@ -38,6 +38,7 @@
 </template>
 
 <script>
+import { getSavings } from "@/http/api";
 export default {
   name: "ChargeSave",
   data() {
@@ -48,29 +49,32 @@ export default {
   },
   methods: {
     getChargeNum() {
-      this.allCharge = 2000;
-      this.chargeList = [
-        {
-          title: "电",
-          icon: require("../../../assets/img/analysis-electric.png"),
-          num: 500
-        },
-        {
-          title: "热水",
-          icon: require("../../../assets/img/analysis-hotwater.png"),
-          num: 500
-        },
-        {
-          title: "冷",
-          icon: require("../../../assets/img/analysis-cold.png"),
-          num: 500
-        },
-        {
-          title: "热",
-          icon: require("../../../assets/img/analysis-hot.png"),
-          num: 500
-        }
-      ];
+      getSavings().then(res => {
+        let data = res.data.data;
+        this.allCharge = Math.round(data.Total);
+        this.chargeList = [
+          {
+            title: "电",
+            icon: require("../../../assets/img/analysis-electric.png"),
+            num: Math.round(data.Electricity)
+          },
+          {
+            title: "热水",
+            icon: require("../../../assets/img/analysis-hotwater.png"),
+            num: Math.round(data.HotWater)
+          },
+          {
+            title: "冷",
+            icon: require("../../../assets/img/analysis-cold.png"),
+            num: Math.round(data.Cold)
+          },
+          {
+            title: "热",
+            icon: require("../../../assets/img/analysis-hot.png"),
+            num: Math.round(data.Hot)
+          }
+        ];
+      });
     }
   },
   mounted() {
@@ -82,6 +86,7 @@ export default {
 <style lang="stylus" scoped>
 @import '~@/assets/css/common.styl'
 .charge-wrapper
+  min-height: 26.5784vh
   .charge-all
     margin-top: 1.388889vh
     display: flex

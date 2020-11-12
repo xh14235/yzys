@@ -26,6 +26,9 @@ export default {
   },
   methods: {
     drawLine(lineData) {
+      let bodyWidth = document.body.offsetWidth;
+      let font1 = bodyWidth > 1600 ? 12 : 10;
+      let font2 = bodyWidth > 1600 ? 16 : 12;
       let series = [];
       let seriesLength = lineData.legendData.length;
       for (let i = 0; i < seriesLength; i++) {
@@ -74,14 +77,14 @@ export default {
           nameLocation: "end",
           nameTextStyle: {
             color: this.white,
-            fontSize: 12,
+            fontSize: font1,
             align: "right",
-            verticalAlign: "bottom"
+            verticalAlign: "top"
           },
           axisLabel: {
             show: true,
             textStyle: {
-              fontSize: 12,
+              fontSize: font1,
               color: this.white
             }
           },
@@ -102,7 +105,7 @@ export default {
         {
           show: lineData.legendShow,
           textStyle: {
-            fontSize: 12,
+            fontSize: font2,
             color: this.white
           },
           itemWidth: 15,
@@ -118,7 +121,7 @@ export default {
           text: lineData.title,
           textStyle: {
             color: this.white,
-            fontSize: 14,
+            fontSize: font2,
             fontWeight: "normal"
           },
           top: lineData.titleTop,
@@ -144,7 +147,7 @@ export default {
           axisLabel: {
             show: true,
             textStyle: {
-              fontSize: 12,
+              fontSize: font1,
               color: this.white
             }
           },

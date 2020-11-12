@@ -17,7 +17,7 @@
           </div>
         </div>
       </div>
-      <img class="" src="../../../assets/img/long-line.png" alt="" />
+      <img class="air-line" src="../../../assets/img/long-line.png" alt="" />
       <div class="air-right">
         <div class="air-right-item">
           <span>温度</span>

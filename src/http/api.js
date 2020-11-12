@@ -13,7 +13,7 @@
 import axios from "axios";
 
 axios.defaults.baseURL = "http://116.236.30.222:9020/";
-axios.defaults.timeout = 10000;
+axios.defaults.timeout = 20000;
 axios.defaults.headers.post["Content-Type"] = "application/json";
 let token = localStorage.token;
 axios.defaults.headers.common["Authorization"] = token;
@@ -54,6 +54,30 @@ export const getConsumerAllEnergyNum = params =>
 export const getConsumerEnergyNum = params => {
   return axios({
     url: "/energy/api/consumer/building/getEnergyType",
+    method: "GET",
+    params: params
+  });
+};
+
+// 能源分析板块
+
+// 获取节省金额
+export const getSavings = params =>
+  axios.get("/energy/api/optimization/total/price", params);
+
+// 节能趋势
+export const getEnergySavingTrend = params => {
+  return axios({
+    url: "/energy/api/consumer/date/allType/saveEnergy",
+    method: "GET",
+    params: params
+  });
+};
+
+// 耗能对比
+export const getEnergyComparison = params => {
+  return axios({
+    url: "/energy/api/consumer/date/allType/total",
     method: "GET",
     params: params
   });

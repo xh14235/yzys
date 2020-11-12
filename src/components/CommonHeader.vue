@@ -1,8 +1,8 @@
 <template>
   <div class="common-header-wrapper">
-    <div class="header-title">
+    <!-- <div class="header-title">
       <img src="../assets/img/logo.png" alt="" />
-    </div>
+    </div> -->
     <div class="header-other">
       <span class="header-time num">{{ nowTime }}</span>
       <img class="header-icon" src="../assets/img/cloudy.png" />
@@ -106,12 +106,12 @@ export default {
   width: 100%
   height: 8vh
   display: flex
-  justify-content: space-between
+  justify-content: flex-end
   align-items: center
-  .header-title
-    img
-      width: 18.44vw
-      vertical-align: top
+  // .header-title
+  //   img
+  //     width: 18.44vw
+  //     vertical-align: top
   .header-other
     font-size: $font20
     width: 15vw

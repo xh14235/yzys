@@ -54,6 +54,9 @@ export default {
 @import '~@/assets/css/common.styl'
 .home-tab
   width: 100vw
+  padding: 0 1.5625vw
+  background-image: url('../../../assets/img/bg-bottom.png')
+  background-size: 100% 100%
   height: $commonHeight
   display: flex
   justify-content: left
