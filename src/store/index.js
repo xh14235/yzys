@@ -4,7 +4,7 @@ import Vuex from "vuex";
 import color from "./color";
 import font from "./font";
 
-let defaultToken = localStorage.token || "";
+let defaultToken = sessionStorage.token || "";
 
 Vue.use(Vuex);
 // 能源供给及能源消费页面 累计能量值及能源占比图数据请求
@@ -39,7 +39,7 @@ export default new Vuex.Store({
     },
     mutLogin(state, token) {
       state.token = token;
-      localStorage.token = token;
+      sessionStorage.token = token;
     },
     mutWeather(state, weather) {
       state.pm25 = weather.pm25;

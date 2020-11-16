@@ -61,6 +61,8 @@ export default {
   display: flex
   justify-content: left
   align-items: center
+  position: relative
+  z-index: 1
   .home-tab-item
     width: 5.42vw
     height: 3.61vh

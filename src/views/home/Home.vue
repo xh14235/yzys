@@ -5,6 +5,7 @@
     </div> -->
     <div class="home-main-wrapper">
       <HomeLeft></HomeLeft>
+      <Map></Map>
       <MapController></MapController>
       <HomeRight></HomeRight>
     </div>
@@ -24,7 +25,8 @@ export default {
     HomeLeft: () => import("./components/HomeLeft"),
     HomeRight: () => import("./components/HomeRight"),
     HomeTab: () => import("./components/HomeTab"),
-    MapController: () => import("@/components/MapController")
+    MapController: () => import("@/components/MapController"),
+    Map: () => import("@/components/three/Map")
   },
   methods: {
     ...mapMutations(["mutSupplyData", "mutConsumeData"]),
@@ -51,23 +53,19 @@ export default {
 .home-wrapper
   width: 100vw
   height: 100vh
-  // padding: 0 1.5625vw
   overflow: hidden
-  background-image: url('../../assets/img/bg.jpg')
-  background-size: cover
+  // background-image: url('../../assets/img/bg.jpg')
+  // background-size: cover
   display: flex
   flex-direction: column
-  // .home-header-wrapper, .home-footer-wrapper
-  //   width: 100%
-  //   padding: 0 1.5625vw
-  //   height: $commonHeight
   .home-footer-wrapper
     width: 100%
     height: $commonHeight
   .home-main-wrapper
     width: 100%
     height: 'calc(100vh  - %s)' % $commonHeight
-    display: flex
-    align-items: center
-    justify-content: space-between
+    // display: flex
+    // align-items: center
+    // justify-content: space-between
+    position: relative
 </style>

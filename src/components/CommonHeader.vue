@@ -11,6 +11,13 @@
         <span class="sup">PM2.5 </span>
         <span>{{ pm25 }}</span>
       </span>
+      |
+      <img
+        class="header-logout"
+        src="../assets/img/logout.png"
+        @click="logout()"
+        alt=""
+      />
     </div>
   </div>
 </template>
@@ -91,6 +98,11 @@ export default {
       //   // console.log(res);
       //   this.weather = res.data.data[0].wea;
       // });
+    },
+    logout() {
+      this.$router.push("/");
+      // sessionStorage.token = "";
+      sessionStorage.removeItem("token");
     }
   },
   created() {
@@ -109,9 +121,9 @@ export default {
   justify-content: flex-end
   align-items: center
   // .header-title
-  //   img
-  //     width: 18.44vw
-  //     vertical-align: top
+  // img
+  // width: 18.44vw
+  // vertical-align: top
   .header-other
     font-size: $font20
     width: 15vw
@@ -125,4 +137,6 @@ export default {
     .sup
       font-size: $font12
       vertical-align: top
+  .header-logout
+    cursor: pointer
 </style>

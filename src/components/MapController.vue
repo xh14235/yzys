@@ -85,6 +85,7 @@ export default {
   position: absolute
   left: 23vw
   transition: all 0.3s
+  z-index: 1
   .controller-item
     cursor: pointer
     display: flex

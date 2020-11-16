@@ -15,7 +15,7 @@ import axios from "axios";
 axios.defaults.baseURL = "http://116.236.30.222:9020/";
 axios.defaults.timeout = 20000;
 axios.defaults.headers.post["Content-Type"] = "application/json";
-let token = localStorage.token;
+let token = sessionStorage.token;
 axios.defaults.headers.common["Authorization"] = token;
 
 // 登录 获取token

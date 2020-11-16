@@ -40,4 +40,8 @@ export default {
   background-size: 100% 100%
   height: 'calc(100vh  - %s)' % $commonHeight
   overflow: hidden
+  position: absolute
+  top: 0
+  right: 0
+  z-index: 1
 </style>

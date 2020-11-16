@@ -45,7 +45,7 @@ export default {
   name: "Login",
   data() {
     return {
-      username: "",
+      username: localStorage.username || "",
       password: ""
     };
   },
@@ -61,6 +61,7 @@ export default {
           let token = data.data.tokenHead + data.data.token;
           this.mutLogin(token);
           this.$router.push("/home");
+          localStorage.username = this.username;
         } else {
           alert("账号或者密码错误！");
         }

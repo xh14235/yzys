@@ -4,6 +4,8 @@ import router from "./router";
 import store from "./store";
 import echarts from "echarts";
 import "./plugins/element.js";
+// wheel vue控制台报警
+import "default-passive-events";
 // rsa加密
 import JSEncrypt from "jsencrypt";
 // import VueJsonp from "jsonp";

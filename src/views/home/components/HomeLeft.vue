@@ -42,6 +42,10 @@ export default {
   background-size: 100% 100%
   height: 'calc(100vh  - %s)' % $commonHeight
   overflow: hidden
+  position: absolute
+  top: 0
+  left: 0
+  z-index: 1
   .header-title
     height: 8vh
     img
