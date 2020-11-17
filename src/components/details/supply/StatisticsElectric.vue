@@ -30,7 +30,7 @@ export default {
   methods: {
     getEchartsData() {
       getElectricNum().then(res => {
-        let data = res.data.data.DISTRIBUTED.slice(-24);
+        let data = res.data.DISTRIBUTED.slice(-24);
         let xData = data.map(item => {
           return item.hourValue - 1;
         });

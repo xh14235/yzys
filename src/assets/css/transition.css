@@ -45,7 +45,7 @@
 }
 /* 旋转 */
 .rotate{
-  animation: rotate 3s linear infinite
+  animation: rotate 10s linear infinite
 }
 @keyframes rotate {
   0% {

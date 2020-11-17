@@ -90,7 +90,7 @@ export default {
         date,
         dateType
       }).then(res => {
-        let data = res.data.data;
+        let data = res.data;
         let xData = data.Cold.map(item => {
           return item.commonValue;
         });

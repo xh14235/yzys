@@ -6,7 +6,11 @@
     <div class="charge-wrapper">
       <div class="charge-all">
         <div class="charge-all-icon">
-          <img src="../../../assets/img/circle.png" alt="" class="outer" />
+          <img
+            src="../../../assets/img/circle.png"
+            alt=""
+            class="outer rotate"
+          />
           <img src="../../../assets/img/money.png" alt="" class="inner" />
         </div>
         <div class="charge-all-detail">
@@ -50,7 +54,7 @@ export default {
   methods: {
     getChargeNum() {
       getSavings().then(res => {
-        let data = res.data.data;
+        let data = res.data;
         this.allCharge = Math.round(data.Total);
         this.chargeList = [
           {

@@ -32,7 +32,7 @@ export default {
   methods: {
     getList() {
       getAbnormalMonitoring().then(res => {
-        this.abnormalMonitoringList = res.data.data.map(item => {
+        this.abnormalMonitoringList = res.data.map(item => {
           item.warnTime = item.warnTime.slice(0, 16);
           return item;
         });

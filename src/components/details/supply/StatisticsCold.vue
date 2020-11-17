@@ -29,10 +29,11 @@ export default {
   },
   methods: {
     getEchartsData() {
+      console.log(getSingleEnergyNum);
       getSingleEnergyNum({
         type: "COLD"
       }).then(res => {
-        let data = res.data.data.slice(-24);
+        let data = res.data.slice(-24);
         let xData = data.map(item => {
           return item.hourValue - 1;
         });

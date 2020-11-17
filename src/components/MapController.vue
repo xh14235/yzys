@@ -73,8 +73,9 @@ export default {
   },
   watch: {
     mapIconHeight() {
+      let hei = document.body.clientHeight * 0.08;
       let controller = this.$refs.controller;
-      controller.style.bottom = this.mapIconHeight + "px";
+      controller.style.bottom = this.mapIconHeight - hei + "px";
     }
   }
 };

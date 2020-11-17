@@ -2,16 +2,17 @@ import axios from "axios";
 import store from "@/store/index";
 
 // 环境的切换
-if (process.env.NODE_ENV === "development") {
-  axios.defaults.baseURL = "";
-} else if (process.env.NODE_ENV === "debug") {
-  axios.defaults.baseURL = "";
-} else if (process.env.NODE_ENV === "production") {
-  axios.defaults.baseURL = "http://116.236.30.222:9020/";
-}
+// if (process.env.NODE_ENV === "development") {
+//   axios.defaults.baseURL = "";
+// } else if (process.env.NODE_ENV === "debug") {
+//   axios.defaults.baseURL = "";
+// } else if (process.env.NODE_ENV === "production") {
+//   axios.defaults.baseURL = "http://116.236.30.222:9020/";
+// }
+// console.log(process.env.NODE_ENV);
 
+axios.defaults.baseURL = "http://116.236.30.222:9020/";
 axios.defaults.timeout = 10000;
-
 axios.defaults.headers.post["Content-Type"] = "application/json";
 
 axios.interceptors.request.use(

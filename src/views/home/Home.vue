@@ -16,7 +16,7 @@
 </template>
 
 <script>
-import { getAllEnergyNum, getConsumerAllEnergyNum } from "@/http/api";
+import { getAllEnergyNum, getConsumerAllEnergyNum, login } from "@/http/api";
 import { mapMutations } from "vuex";
 export default {
   name: "Home",
@@ -28,22 +28,48 @@ export default {
     MapController: () => import("@/components/MapController"),
     Map: () => import("@/components/three/Map")
   },
+  data() {
+    return {
+      timer: null
+    };
+  },
   methods: {
-    ...mapMutations(["mutSupplyData", "mutConsumeData"]),
+    ...mapMutations(["mutSupplyData", "mutConsumeData", "mutLogin"]),
     getSupplyList() {
       getAllEnergyNum().then(res => {
-        this.mutSupplyData(res.data.data);
+        this.mutSupplyData(res.data);
       });
     },
     getConsumeList() {
       getConsumerAllEnergyNum().then(res => {
-        this.mutConsumeData(res.data.data);
+        this.mutConsumeData(res.data);
+      });
+    },
+    login() {
+      login({
+        username: "portal",
+        password: this.$getRsaCode("admin123")
+      }).then(data => {
+        if (data.code === 200) {
+          let token = data.data.tokenHead + data.data.token;
+          this.mutLogin(token);
+          sessionStorage.token = token;
+        } else {
+          alert("账号或者密码错误！");
+        }
       });
     }
   },
   mounted() {
     this.getSupplyList();
     this.getConsumeList();
+    this.timer = setInterval(() => {
+      this.login();
+    }, 61107);
+  },
+  beforeDestroy() {
+    clearInterval(this.timer);
+    this.timer = null;
   }
 };
 </script>

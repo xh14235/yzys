@@ -24,6 +24,7 @@
             type="password"
             class="login-password"
             placeholder="请输入密码"
+            @keyup.enter="login()"
           />
           <img
             src="../../assets/img/login-password.png"
@@ -55,11 +56,12 @@ export default {
       login({
         username: this.username,
         password: this.$getRsaCode(this.password)
-      }).then(res => {
-        let data = res.data;
+      }).then(data => {
+        // let data = res.data;
         if (data.code === 200) {
           let token = data.data.tokenHead + data.data.token;
           this.mutLogin(token);
+          sessionStorage.token = token;
           this.$router.push("/home");
           localStorage.username = this.username;
         } else {

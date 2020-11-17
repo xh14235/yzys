@@ -84,7 +84,7 @@ export default {
         date,
         dateType: "month"
       }).then(res => {
-        let data = res.data.data;
+        let data = res.data;
         let list = [data.Electricity, data.HotWater, data.Cold, data.Hot];
         let yearNum = new Date(date).getFullYear();
         let monthNum = new Date(date).getMonth() + 1;

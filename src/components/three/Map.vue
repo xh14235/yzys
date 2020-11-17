@@ -51,20 +51,18 @@ export default {
       this.renderer.render(this.scene, this.camera);
     },
     loadObj() {
-      new MTLLoader()
-        .setPath("/public/models/")
-        .load("test.mtl", (materials) => {
-          console.log("materials", materials);
-          materials.preload();
-          new OBJLoader()
-            .setMaterials(materials)
-            .setPath("/public/models/")
-            .load("test.obj", (obj) => {
-              obj.scale.set(0.001, 0.001, 0.001);
-              obj.position.set(0, 0, 0);
-              this.scene.add(obj);
-            });
-        });
+      new MTLLoader().setPath("/models/").load("test.mtl", materials => {
+        console.log("materials", materials);
+        materials.preload();
+        new OBJLoader()
+          .setMaterials(materials)
+          .setPath("/models/")
+          .load("test.obj", obj => {
+            obj.scale.set(0.001, 0.001, 0.001);
+            obj.position.set(0, 0, 0);
+            this.scene.add(obj);
+          });
+      });
     }
   },
   mounted() {

@@ -39,7 +39,6 @@ export default new Vuex.Store({
     },
     mutLogin(state, token) {
       state.token = token;
-      sessionStorage.token = token;
     },
     mutWeather(state, weather) {
       state.pm25 = weather.pm25;
