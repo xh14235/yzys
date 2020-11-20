@@ -37,6 +37,8 @@ export default {
       list2: [],
       legend1: "上月",
       legend2: "本月"
+      // timer: null,
+      // interval: 3000
     };
   },
   computed: {
@@ -124,9 +126,19 @@ export default {
     },
     list1() {
       this.getEchartsData();
+      // clearInterval(this.timer);
+      // this.timer = null;
+      // this.timer = setInterval(() => {
+      //   this.getEchartsData();
+      // }, this.interval);
     },
     list2() {
       this.getEchartsData();
+      // clearInterval(this.timer);
+      // this.timer = null;
+      // this.timer = setInterval(() => {
+      //   this.getEchartsData();
+      // }, this.interval);
     }
   },
   mounted() {

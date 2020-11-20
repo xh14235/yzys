@@ -5,11 +5,16 @@
     </div> -->
     <div class="header-other">
       <span class="header-time num">{{ nowTime }}</span>
-      <img class="header-icon" src="../assets/img/cloudy.png" />
+      <!-- <img class="header-icon" src="../assets/img/cloudy.png" /> -->
+      <img
+        class="header-icon"
+        :src="require('../assets/img/' + weather.wea_img + '.png')"
+        v-if="weather.wea_img"
+      />
       <span class="header-weather num">
-        <span>{{ tem }}℃ | </span>
+        <span v-if="weather.tem">{{ weather.tem }}℃ | </span>
         <span class="sup">PM2.5 </span>
-        <span>{{ pm25 }}</span>
+        <span v-if="weather.air_pm25">{{ weather.air_pm25 }}</span>
       </span>
       |
       <img
@@ -30,11 +35,14 @@ export default {
   name: "CommonHeader",
   data() {
     return {
-      nowTime: ""
+      nowTime: "",
+      timer: null,
+      interval: 60000
     };
   },
   computed: {
-    ...mapState(["tem", "pm25", "weather"])
+    // ...mapState(["tem", "pm25", "weather", "weatherIcon"])
+    ...mapState(["weather"])
   },
   methods: {
     ...mapMutations(["mutWeather"]),
@@ -65,14 +73,15 @@ export default {
           if (err) {
             console.error(err.message);
           } else {
-            // console.log(data);
-            let weather = {};
-            weather.weather = data.wea;
-            weather.pm25 = data.air_pm25;
-            weather.tem = data.tem;
-            weather.humidity = data.humidity;
-            weather.pressure = data.pressure;
-            this.mutWeather(weather);
+            // let weather = {};
+            // weather.weather = data.wea;
+            // weather.pm25 = data.air_pm25;
+            // weather.tem = data.tem;
+            // weather.humidity = data.humidity;
+            // weather.pressure = data.pressure;
+            // weather.weatherIcon = data.wea_img;
+            this.mutWeather(data);
+            // console.log(weather);
           }
         }
       );
@@ -105,9 +114,16 @@ export default {
       sessionStorage.removeItem("token");
     }
   },
-  created() {
+  mounted() {
     this.currentTime();
     this.getWeather();
+    this.timer = setInterval(() => {
+      this.getWeather();
+    }, this.interval);
+  },
+  beforeDestroy() {
+    clearInterval(this.timer);
+    this.timer = null;
   }
 };
 </script>
@@ -131,8 +147,8 @@ export default {
     align-items: center
     justify-content: space-around
   .header-icon
-    width: 1.5625vw
-    height: 1.5625vw
+    width: 1.5vw
+    height: 1.1vw
   .header-weather
     .sup
       font-size: $font12

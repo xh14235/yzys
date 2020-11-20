@@ -30,7 +30,8 @@ export default {
   },
   data() {
     return {
-      timer: null
+      timer: null,
+      interval: 60107
     };
   },
   methods: {
@@ -65,7 +66,9 @@ export default {
     this.getConsumeList();
     this.timer = setInterval(() => {
       this.login();
-    }, 61107);
+      this.getSupplyList();
+      this.getConsumeList();
+    }, this.interval);
   },
   beforeDestroy() {
     clearInterval(this.timer);

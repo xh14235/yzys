@@ -1,12 +1,16 @@
 <template>
   <div class="common-wrapper">
     <ParkInfo v-if="shows.includes('left01')"></ParkInfo>
-    <AbnormalMonitoring v-if="shows.includes('left02')"></AbnormalMonitoring>
+    <AbnormalMonitoring
+      v-if="shows.includes('left02')"
+      :list="abnormalMonitoringList"
+    ></AbnormalMonitoring>
     <div class="line" ref="line"></div>
   </div>
 </template>
 
 <script>
+import { getAbnormalMonitoring } from "@/http/api";
 import { mapState, mapMutations } from "vuex";
 export default {
   name: "Manage",
@@ -15,6 +19,13 @@ export default {
     AbnormalMonitoring: () =>
       import("@/components/details/manage/AbnormalMonitoring")
   },
+  data() {
+    return {
+      abnormalMonitoringList: [],
+      timer: null,
+      interval: 60000
+    };
+  },
   computed: {
     ...mapState(["dispose"]),
     shows() {
@@ -22,7 +33,15 @@ export default {
     }
   },
   methods: {
-    ...mapMutations(["changeMapIconHeight"])
+    ...mapMutations(["changeMapIconHeight"]),
+    getList() {
+      getAbnormalMonitoring().then(res => {
+        this.abnormalMonitoringList = res.data.map(item => {
+          item.warnTime = item.warnTime.slice(0, 16);
+          return item;
+        });
+      });
+    }
   },
   activated() {
     setTimeout(() => {
@@ -31,6 +50,18 @@ export default {
         document.body.clientHeight - line.getBoundingClientRect().top;
       this.changeMapIconHeight(height);
     }, 500);
+    this.getList();
+    this.timer = setInterval(() => {
+      this.getList();
+    }, this.interval);
+  },
+  deactivated() {
+    clearInterval(this.timer);
+    this.timer = null;
+  },
+  beforeDestroy() {
+    clearInterval(this.timer);
+    this.timer = null;
   }
 };
 </script>

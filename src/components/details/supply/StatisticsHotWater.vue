@@ -10,52 +10,13 @@
 </template>
 
 <script>
-import { getSingleEnergyNum } from "@/http/api";
-import { mapState } from "vuex";
 export default {
   name: "StatisticsElectric",
-  data() {
-    return {
-      echarts: {}
-    };
-  },
-  computed: {
-    ...mapState({
-      yellow: state => state.color.yellow
-    })
+  props: {
+    echarts: Object
   },
   components: {
     Eline: () => import("@/components/echarts/Eline")
-  },
-  methods: {
-    getEchartsData() {
-      getSingleEnergyNum({
-        type: "HOT_WATER"
-      }).then(res => {
-        let data = res.data.slice(-24);
-        let xData = data.map(item => {
-          return item.hourValue - 1;
-        });
-        let yData = data.map(item => {
-          return item.value;
-        });
-        this.echarts = {
-          id: "statisticsHotWater",
-          title: "",
-          legendShow: false,
-          legendData: ["供热水统计"],
-          color: [this.yellow],
-          areaColor: true,
-          smooth: true,
-          xData: xData,
-          yName: "(kWh) ",
-          data: [yData]
-        };
-      });
-    }
-  },
-  mounted() {
-    this.getEchartsData();
   }
 };
 </script>

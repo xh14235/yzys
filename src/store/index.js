@@ -11,11 +11,13 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   state: {
     token: defaultToken,
-    weather: "",
-    pm25: "",
-    humidity: "",
-    pressure: "",
-    tem: "",
+    // weather: "",
+    // weatherIcon: "",
+    // pm25: "",
+    // humidity: "",
+    // pressure: "",
+    // tem: "",
+    weather: {},
     // 底部导航
     mapTab: 0,
     // 地图控制按钮高度
@@ -41,11 +43,12 @@ export default new Vuex.Store({
       state.token = token;
     },
     mutWeather(state, weather) {
-      state.pm25 = weather.pm25;
-      state.humidity = weather.humidity;
-      state.pressure = weather.pressure;
-      state.tem = weather.tem;
-      state.weather = weather.weather;
+      // state.pm25 = weather.pm25;
+      // state.humidity = weather.humidity;
+      // state.pressure = weather.pressure;
+      // state.tem = weather.tem;
+      state.weather = weather;
+      // state.weatherIcon = weather.weatherIcon;
     },
     mutSupplyData(state, data) {
       state.supplyData = data;

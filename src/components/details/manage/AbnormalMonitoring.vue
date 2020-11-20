@@ -10,7 +10,7 @@
         <span>区域</span>
       </div>
       <div class="table-body">
-        <p v-for="item of abnormalMonitoringList" :key="item.id">
+        <p v-for="item of list" :key="item.id">
           <span>{{ item.warnTime }}</span>
           <span>{{ item.warnTypeName }}</span>
           <span>{{ item.areaName }}</span>
@@ -21,26 +21,10 @@
 </template>
 
 <script>
-import { getAbnormalMonitoring } from "@/http/api";
 export default {
   name: "AbnormalMonitoring",
-  data() {
-    return {
-      abnormalMonitoringList: []
-    };
-  },
-  methods: {
-    getList() {
-      getAbnormalMonitoring().then(res => {
-        this.abnormalMonitoringList = res.data.map(item => {
-          item.warnTime = item.warnTime.slice(0, 16);
-          return item;
-        });
-      });
-    }
-  },
-  mounted() {
-    this.getList();
+  props: {
+    list: Array
   }
 };
 </script>

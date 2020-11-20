@@ -49,6 +49,8 @@ export default {
     return {
       chargeList: [],
       allCharge: 0
+      // timer: null,
+      // interval: 60000
     };
   },
   methods: {
@@ -83,7 +85,20 @@ export default {
   },
   mounted() {
     this.getChargeNum();
+    // this.timer = setInterval(() => {
+    //   this.getChargeNum();
+    // }, this.interval);
   }
+  // activated() {
+  //   this.getChargeNum();
+  //   this.timer = setInterval(() => {
+  //     this.getChargeNum();
+  //   }, this.interval);
+  // },
+  // deactivated() {
+  //   clearInterval(this.timer);
+  //   this.timer = null;
+  // }
 };
 </script>
 

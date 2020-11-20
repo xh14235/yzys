@@ -22,19 +22,19 @@
         <div class="air-right-item">
           <span>温度</span>
           <div>
-            <span class="num">{{ tem }}</span> ℃
+            <span class="num">{{ weather.tem }}</span> ℃
           </div>
         </div>
         <div class="air-right-item">
           <span>湿度</span>
           <div>
-            <span class="num">{{ humidity }}</span> RH
+            <span class="num">{{ weather.humidity }}</span> RH
           </div>
         </div>
         <div class="air-right-item">
           <span>大气压</span>
           <div>
-            <span class="num">{{ pressure }}</span> kPa
+            <span class="num">{{ weather.pressure }}</span> kPa
           </div>
         </div>
       </div>
@@ -47,7 +47,7 @@ import { mapState } from "vuex";
 export default {
   name: "AirTesting",
   computed: {
-    ...mapState(["tem", "pressure", "humidity"])
+    ...mapState(["weather"])
   }
 };
 </script>

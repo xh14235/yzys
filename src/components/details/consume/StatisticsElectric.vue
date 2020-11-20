@@ -10,52 +10,13 @@
 </template>
 
 <script>
-import { getConsumerEnergyNum } from "@/http/api";
-import { mapState } from "vuex";
 export default {
   name: "StatisticsElectric",
-  data() {
-    return {
-      echarts: {}
-    };
-  },
-  computed: {
-    ...mapState({
-      green: state => state.color.green
-    })
+  props: {
+    echarts: {}
   },
   components: {
     Eline: () => import("@/components/echarts/Eline")
-  },
-  methods: {
-    getEchartsData() {
-      getConsumerEnergyNum({
-        type: "ELECTRICITY"
-      }).then(res => {
-        let data = res.data.slice(-24);
-        let xData = data.map(item => {
-          return item.hourValue - 1;
-        });
-        let yData = data.map(item => {
-          return item.value;
-        });
-        this.echarts = {
-          id: "statisticsElectric2",
-          title: "",
-          legendShow: false,
-          legendData: ["供电统计"],
-          color: [this.green],
-          areaColor: true,
-          smooth: true,
-          xData: xData,
-          yName: "(kWh) ",
-          data: [yData]
-        };
-      });
-    }
-  },
-  mounted() {
-    this.getEchartsData();
   }
 };
 </script>
