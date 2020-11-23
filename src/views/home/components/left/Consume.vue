@@ -1,5 +1,5 @@
 <template>
-  <div class="common-wrapper">
+  <div class="common-wrapper" @click="mutddd(abc)">
     <EnergyAll v-if="shows.includes('left01')"></EnergyAll>
     <StatisticsElectric
       v-if="shows.includes('left02')"
@@ -14,6 +14,7 @@
 </template>
 
 <script>
+// import {mapMutations} from "vuex"
 import { getConsumerEnergyNum } from "@/http/api";
 import { mapState, mapMutations } from "vuex";
 export default {
@@ -44,7 +45,7 @@ export default {
     }
   },
   methods: {
-    ...mapMutations(["changeMapIconHeight"]),
+    ...mapMutations(["changeMapIconHeight", "mutddd"]),
     getEchartsData1() {
       getConsumerEnergyNum({
         type: "ELECTRICITY"
@@ -102,7 +103,7 @@ export default {
       let height =
         document.body.clientHeight - line.getBoundingClientRect().top;
       this.changeMapIconHeight(height);
-    }, 500);
+    }, 1000);
     this.getEchartsData1();
     this.getEchartsData2();
     this.timer = setInterval(() => {

@@ -100,7 +100,7 @@ export default {
       let height =
         document.body.clientHeight - line.getBoundingClientRect().top;
       this.changeMapIconHeight(height);
-    }, 500);
+    }, 1000);
     this.getEchartsData1();
     this.getEchartsData2();
     this.timer = setInterval(() => {

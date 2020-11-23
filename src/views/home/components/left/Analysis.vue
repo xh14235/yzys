@@ -29,7 +29,7 @@ export default {
       let height =
         document.body.clientHeight - line.getBoundingClientRect().top;
       this.changeMapIconHeight(height);
-    }, 500);
+    }, 1000);
   }
 };
 </script>
