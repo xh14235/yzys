@@ -15,7 +15,7 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
+import { mapState, mapMutations } from "vuex";
 export default {
   name: "MapController",
   data() {
@@ -52,17 +52,33 @@ export default {
     ...mapState(["mapIconHeight"])
   },
   methods: {
+    ...mapMutations([
+      "changeTagging",
+      "changeAlarm",
+      "changePiping",
+      "changeWalk",
+      "changeMonitor"
+    ]),
     itemClick(item) {
       item.active = !item.active;
       // 地图方法
-      // switch (item.id) {
-      //   case value:
-
-      //     break;
-
-      //   default:
-      //     break;
-      // }
+      switch (item.id) {
+        case "001":
+          this.changeTagging();
+          this.changeMonitor();
+          break;
+        case "002":
+          this.changeAlarm();
+          break;
+        case "003":
+          this.changePiping();
+          break;
+        case "004":
+          this.changeWalk();
+          break;
+        default:
+          break;
+      }
     },
     itemIconEnter(item) {
       item.titleShow = true;
@@ -100,29 +116,29 @@ export default {
       z-index: 1
     &:nth-child(1)
       .item-icon
-        background-image: url("../assets/img/map-icon11.png")
+        background-image: url('../assets/img/map-icon11.png')
       .item-icon-active
-        background-image: url("../assets/img/map-icon12.png")
+        background-image: url('../assets/img/map-icon12.png')
     &:nth-child(2)
       .item-icon
-        background-image: url("../assets/img/map-icon21.png")
+        background-image: url('../assets/img/map-icon21.png')
       .item-icon-active
-        background-image: url("../assets/img/map-icon22.png")
+        background-image: url('../assets/img/map-icon22.png')
     &:nth-child(3)
       .item-icon
-        background-image: url("../assets/img/map-icon31.png")
+        background-image: url('../assets/img/map-icon31.png')
       .item-icon-active
-        background-image: url("../assets/img/map-icon32.png")
+        background-image: url('../assets/img/map-icon32.png')
     &:nth-child(4)
       .item-icon
-        background-image: url("../assets/img/map-icon41.png")
+        background-image: url('../assets/img/map-icon41.png')
       .item-icon-active
-        background-image: url("../assets/img/map-icon42.png")
+        background-image: url('../assets/img/map-icon42.png')
     .item-title
       width: 5.208vw
       padding-left: 0.729vw
       height: 1.875vw
       line-height: 1.875vw
-      background-image: url("../assets/img/controller-bg.png")
+      background-image: url('../assets/img/controller-bg.png')
       background-size: 100% 100%
 </style>

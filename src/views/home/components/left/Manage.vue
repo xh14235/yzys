@@ -45,9 +45,11 @@ export default {
   },
   activated() {
     setTimeout(() => {
+      // let defaultHeight = document.body.scrollHeight * 0.78;
       let line = this.$refs.line;
       let height =
         document.body.clientHeight - line.getBoundingClientRect().top;
+      // height = height === 0 ? defaultHeight : height;
       this.changeMapIconHeight(height);
     }, 1000);
     this.getList();

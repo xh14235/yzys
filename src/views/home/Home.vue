@@ -7,6 +7,8 @@
       <HomeLeft></HomeLeft>
       <Map></Map>
       <MapController></MapController>
+      <Monitor v-show="monitorShow"></Monitor>
+      <Floor v-show="floorShow"></Floor>
       <HomeRight></HomeRight>
     </div>
     <div class="home-footer-wrapper">
@@ -17,15 +19,22 @@
 
 <script>
 import { getAllEnergyNum, getConsumerAllEnergyNum, login } from "@/http/api";
-import { mapMutations } from "vuex";
+import { mapState, mapMutations } from "vuex";
 export default {
   name: "Home",
+  computed: {
+    ...mapState({
+      monitorShow: state => state.map.monitorShow,
+      floorShow: state => state.map.floorShow
+    })
+  },
   components: {
-    // CommonHeader: () => import("@/components/CommonHeader"),
     HomeLeft: () => import("./components/HomeLeft"),
     HomeRight: () => import("./components/HomeRight"),
     HomeTab: () => import("./components/HomeTab"),
     MapController: () => import("@/components/MapController"),
+    Monitor: () => import("@/components/Monitor"),
+    Floor: () => import("@/components/Floor"),
     Map: () => import("@/components/three/Map")
   },
   data() {

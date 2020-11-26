@@ -3,6 +3,7 @@ import Vuex from "vuex";
 
 import color from "./color";
 import font from "./font";
+import map from "./map";
 
 let defaultToken = sessionStorage.token || "";
 
@@ -11,12 +12,6 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   state: {
     token: defaultToken,
-    // weather: "",
-    // weatherIcon: "",
-    // pm25: "",
-    // humidity: "",
-    // pressure: "",
-    // tem: "",
     weather: {},
     // 底部导航
     mapTab: 0,
@@ -43,12 +38,7 @@ export default new Vuex.Store({
       state.token = token;
     },
     mutWeather(state, weather) {
-      // state.pm25 = weather.pm25;
-      // state.humidity = weather.humidity;
-      // state.pressure = weather.pressure;
-      // state.tem = weather.tem;
       state.weather = weather;
-      // state.weatherIcon = weather.weatherIcon;
     },
     mutSupplyData(state, data) {
       state.supplyData = data;
@@ -60,6 +50,7 @@ export default new Vuex.Store({
   actions: {},
   modules: {
     color,
-    font
+    font,
+    map
   }
 });
