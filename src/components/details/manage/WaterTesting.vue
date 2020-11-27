@@ -11,7 +11,7 @@
         <img class="info-img" src="../../../assets/img/ph.png" alt="" />
         <div class="info-detail">
           PH值
-          <div><span class="num">7</span></div>
+          <div><span class="num">7.1</span></div>
         </div>
       </div>
       <img class="short-line" src="../../../assets/img/short-line.png" alt="" />
@@ -23,7 +23,7 @@
         />
         <div class="info-detail">
           水温
-          <div><span class="num">7</span><span>℃</span></div>
+          <div><span class="num">12</span><span>℃</span></div>
         </div>
       </div>
       <img class="short-line" src="../../../assets/img/short-line.png" alt="" />
@@ -35,7 +35,7 @@
         />
         <div class="info-detail">
           水位
-          <div><span class="num">7</span><span>m</span></div>
+          <div><span class="num">3.1</span><span>m</span></div>
         </div>
       </div>
     </div>
@@ -55,6 +55,14 @@ export default {
   },
   methods: {
     getEchartsData() {
+      let date = new Date();
+      let hour = date.getHours();
+      let xData = [];
+      let data = [];
+      for (let i = 1; i <= hour; i++) {
+        xData.push(i);
+        data.push(Math.floor(Math.random() * 30));
+      }
       this.echarts = {
         id: "shuizhi",
         title: "水质分析COD",
@@ -63,9 +71,9 @@ export default {
         color: ["white"],
         areaColor: true,
         smooth: true,
-        xData: [1, 2, 3, 4, 5],
+        xData: xData,
         yName: "(mg/L) ",
-        data: [[11, 32, 23, 42, 35]]
+        data: [data]
       };
     }
   },
