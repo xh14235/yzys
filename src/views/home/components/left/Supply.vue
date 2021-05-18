@@ -45,6 +45,7 @@ export default {
   },
   methods: {
     ...mapMutations(["changeMapIconHeight"]),
+    // 获取供电统计echarts图数据
     getEchartsData1() {
       getElectricNum().then(res => {
         let data = res.data.DISTRIBUTED.slice(-24);
@@ -68,6 +69,7 @@ export default {
         };
       });
     },
+    // 获取共热水统计echarts图数据
     getEchartsData2() {
       getSingleEnergyNum({
         type: "HOT_WATER"
@@ -94,8 +96,9 @@ export default {
       });
     }
   },
-  activated() {
+  mounted() {
     setTimeout(() => {
+      // 获取左侧页面位置及高度，使地图控制按钮高度与左侧页面底部对齐
       let line = this.$refs.line;
       let height =
         document.body.clientHeight - line.getBoundingClientRect().top;
@@ -108,10 +111,24 @@ export default {
       this.getEchartsData2();
     }, this.interval);
   },
-  deactivated() {
-    clearInterval(this.timer);
-    this.timer = null;
-  },
+  // activated() {
+  //   setTimeout(() => {
+  //     let line = this.$refs.line;
+  //     let height =
+  //       document.body.clientHeight - line.getBoundingClientRect().top;
+  //     this.changeMapIconHeight(height);
+  //   }, 1000);
+  //   this.getEchartsData1();
+  //   this.getEchartsData2();
+  //   this.timer = setInterval(() => {
+  //     this.getEchartsData1();
+  //     this.getEchartsData2();
+  //   }, this.interval);
+  // },
+  // deactivated() {
+  //   clearInterval(this.timer);
+  //   this.timer = null;
+  // },
   beforeDestroy() {
     clearInterval(this.timer);
     this.timer = null;

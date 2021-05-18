@@ -25,6 +25,7 @@ export default {
     };
   },
   methods: {
+    // 改变楼层
     changeFloor(index) {
       this.curIndex = index;
       console.log(index);

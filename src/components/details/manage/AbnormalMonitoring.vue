@@ -24,6 +24,7 @@
 export default {
   name: "AbnormalMonitoring",
   props: {
+    // 报警列表，父组件传入
     list: Array
   }
 };

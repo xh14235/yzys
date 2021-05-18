@@ -10,6 +10,7 @@
 </template>
 
 <script>
+// 供电统计
 export default {
   name: "StatisticsElectric",
   props: {

@@ -1,22 +1,21 @@
 <template>
   <div class="common-header-wrapper">
-    <!-- <div class="header-title">
-      <img src="../assets/img/logo.png" alt="" />
-    </div> -->
     <div class="header-other">
       <span class="header-time num">{{ nowTime }}</span>
-      <!-- <img class="header-icon" src="../assets/img/cloudy.png" /> -->
+      <span class="line">|</span>
+      <span class="header-date num">{{ nowDate }}</span>
       <img
         class="header-icon"
         :src="require('../assets/img/' + weather.wea_img + '.png')"
         v-if="weather.wea_img"
       />
-      <span class="header-weather num">
-        <span v-if="weather.tem">{{ weather.tem }}℃ | </span>
-        <span class="sup">PM2.5 </span>
-        <span v-if="weather.air_pm25">{{ weather.air_pm25 }}</span>
-      </span>
-      |
+      <span class="header-tem num" v-if="weather.tem">{{ weather.tem }}℃</span>
+      <span class="line">|</span>
+      <span class="header-sup">PM2.5 </span>
+      <span class="header-pm25 num" v-if="weather.air_pm25">{{
+        weather.air_pm25
+      }}</span>
+      <span class="line">|</span>
       <img
         class="header-logout"
         src="../assets/img/logout.png"
@@ -28,24 +27,23 @@
 </template>
 
 <script>
-// import { weather } from "@/http/api";
 import { mapState, mapMutations } from "vuex";
-// import axios from "axios";
 export default {
   name: "CommonHeader",
   data() {
     return {
       nowTime: "",
+      nowDate: "",
       timer: null,
-      interval: 60000
+      interval: 600000
     };
   },
   computed: {
-    // ...mapState(["tem", "pm25", "weather", "weatherIcon"])
     ...mapState(["weather"])
   },
   methods: {
     ...mapMutations(["mutWeather"]),
+    // 获取固定格式的时间与日期
     getTime() {
       var _this = this;
       let yy = new Date().getFullYear();
@@ -54,8 +52,8 @@ export default {
       let hh = this.add0(new Date().getHours());
       let mf = this.add0(new Date().getMinutes());
       let ss = this.add0(new Date().getSeconds());
-      _this.nowTime =
-        hh + ":" + mf + ":" + ss + " | " + yy + "/" + mm + "/" + dd;
+      _this.nowTime = hh + ":" + mf + ":" + ss;
+      _this.nowDate = yy + "/" + mm + "/" + dd;
     },
     add0(time) {
       return time < 10 ? "0" + time : time;
@@ -64,6 +62,7 @@ export default {
       this.getTime();
       setInterval(this.getTime, 1000);
     },
+    // 获取天气状况，jsonp解决跨域
     getWeather() {
       const jsonp = require("jsonp");
       jsonp(
@@ -73,44 +72,14 @@ export default {
           if (err) {
             console.error(err.message);
           } else {
-            // let weather = {};
-            // weather.weather = data.wea;
-            // weather.pm25 = data.air_pm25;
-            // weather.tem = data.tem;
-            // weather.humidity = data.humidity;
-            // weather.pressure = data.pressure;
-            // weather.weatherIcon = data.wea_img;
             this.mutWeather(data);
-            // console.log(weather);
           }
         }
       );
-      // axios
-      //   .get(
-      //     "https://tianqiapi.com/api?version=v6&appid=95555958&appsecret=Fjprg6Px"
-      //   )
-      //   .then(res => {
-      //     let weather = {};
-      //     weather.weather = res.data.wea;
-      //     weather.pm25 = res.data.air_pm25;
-      //     weather.tem = res.data.tem;
-      //     weather.humidity = res.data.humidity;
-      //     weather.pressure = res.data.pressure;
-      //     this.mutWeather(weather);
-      //   });
-      // weather({
-      //   version: "v1",
-      //   appid: "95555958",
-      //   appsecret: "uBN3Pyn2",
-      //   city: "上海"
-      // }).then(res => {
-      //   // console.log(res);
-      //   this.weather = res.data.data[0].wea;
-      // });
     },
+    // 登出功能
     logout() {
       this.$router.push("/");
-      // sessionStorage.token = "";
       sessionStorage.removeItem("token");
     }
   },
@@ -136,23 +105,25 @@ export default {
   display: flex
   justify-content: flex-end
   align-items: center
-  // .header-title
-  // img
-  // width: 18.44vw
-  // vertical-align: top
   .header-other
     font-size: $font20
-    width: 15vw
     display: flex
     align-items: center
     justify-content: space-around
-  .header-icon
-    width: 1.5vw
-    height: 1.1vw
-  .header-weather
-    .sup
+    .header-time
+      display: inline-block
+      flex: 0 0 2.6vw
+      width: 2.6vw
+      overflow: hidden
+    .header-icon
+      width: 1.2vw
+      height: 1.2vw
+      padding: 0 0.5vw
+    .header-sup
       font-size: $font12
-      vertical-align: top
-  .header-logout
-    cursor: pointer
+      align-self: flex-start
+      padding-right: 0.5vw
+    .line
+      padding: 0 0.5vw
+      align-self: flex-start
 </style>

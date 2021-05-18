@@ -34,7 +34,10 @@
         <div class="air-right-item">
           <span>大气压</span>
           <div>
-            <span class="num">{{ weather.pressure }}</span> kPa
+            <span class="num">{{
+              parseInt(weather.pressure).toLocaleString()
+            }}</span>
+            kPa
           </div>
         </div>
       </div>
@@ -79,6 +82,8 @@ export default {
         font-size: $font24
       .air-left-unit
         font-size: $font16
+        margin-right: auto
+        margin-left: 0.5vw
       .air-left-standard
         .standard-item
           width: 2.1354vw
@@ -107,5 +112,5 @@ export default {
       div
         .num
           color: $green
-          font-size: $font32
+          font-size: $font30
 </style>

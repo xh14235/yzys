@@ -11,13 +11,17 @@ const map = {
     // 播放监控
     monitorShow: false,
     // 楼层控制按钮
-    floorShow: false
+    floorShow: false,
+    // 显示魔方
+    cubeShow: false,
+    // 楼层
+    floor: 0,
+    lineArray: [0.09, 0.14, 0.09, 0.14, 0.09, 0.14, 0.09, 0.14, 0.09, 0.14]
   },
   mutations: {
     // 点标注
     changeTagging(state) {
       state.taggingShow = !state.taggingShow;
-      console.log(state.taggingShow);
     },
     // 报警演示
     changeAlarm(state) {
@@ -39,12 +43,26 @@ const map = {
     closeMonitor(state) {
       state.monitorShow = false;
     },
-    // 控制楼层显示与隐藏
-    ShowFloor(state) {
-      state.floorShow = true;
+    // 改变魔方显示与隐藏
+    ChangeCubeShow(state) {
+      if (!state.cubeShow) {
+        setTimeout(() => {
+          state.cubeShow = true;
+        }, 1500);
+      } else {
+        state.cubeShow = false;
+      }
     },
-    hideFloor(state) {
-      state.floorShow = false;
+    // 改变楼层数
+    changeFloor(state, floor) {
+      state.floor = floor;
+    },
+    // 改变折线图数据，随机数据
+    changeLineArray(state) {
+      state.lineArray = [];
+      for (let i = 0; i < 10; i++) {
+        state.lineArray.push((Math.random() * 0.05 + 0.09).toFixed(2));
+      }
     }
   }
 };

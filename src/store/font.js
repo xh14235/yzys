@@ -8,6 +8,7 @@ const font = {
     font22: "2.0370vh",
     font24: "2.2222vh",
     font28: "2.5926vh",
+    font30: "2.7778vh",
     font32: "2.9630vh"
   }
 };

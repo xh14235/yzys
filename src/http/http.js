@@ -11,8 +11,10 @@ import store from "@/store/index";
 // }
 // console.log(process.env.NODE_ENV);
 
+// http接口ip及端口，统一管理
 axios.defaults.baseURL = "http://116.236.30.222:9020/";
-axios.defaults.timeout = 10000;
+// http请求超时时间
+axios.defaults.timeout = 20000;
 axios.defaults.headers.post["Content-Type"] = "application/json";
 
 axios.interceptors.request.use(

@@ -52,6 +52,7 @@ export default {
   },
   methods: {
     ...mapMutations(["mutLogin"]),
+    // 登录方法
     login() {
       login({
         username: this.username,
@@ -60,6 +61,7 @@ export default {
         // let data = res.data;
         if (data.code === 200) {
           let token = data.data.tokenHead + data.data.token;
+          // 储存token
           this.mutLogin(token);
           sessionStorage.token = token;
           this.$router.push("/home");

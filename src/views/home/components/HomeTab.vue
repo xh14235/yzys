@@ -43,6 +43,7 @@ export default {
   },
   methods: {
     ...mapMutations(["changeMapTab"]),
+    // 底部按钮tab切换
     changeTab(index) {
       this.changeMapTab(index);
     }
@@ -70,9 +71,9 @@ export default {
     text-align: center
     margin-right: 2.1875vw
     font-size: $font20
-    background-image: url("../../../assets/img/bottom-tab-bg.png")
+    background-image: url('../../../assets/img/bottom-tab-bg.png')
     background-size: 100% 100%
     cursor: pointer
     &.active
-      background-image: url("../../../assets/img/bottom-tab-bg-active.png")
+      background-image: url('../../../assets/img/bottom-tab-bg-active.png')
 </style>

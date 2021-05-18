@@ -4,7 +4,7 @@
       <img src="../../../assets/img/consume-title4.png" alt="" />
     </div>
     <div class="common-echarts-box">
-      <Epie :pieData="echarts"></Epie>
+      <Epie :pieData="echarts" v-if="echarts.id"></Epie>
     </div>
   </div>
 </template>
@@ -32,6 +32,7 @@ export default {
     Epie: () => import("@/components/echarts/Epie")
   },
   methods: {
+    // 获取能源占比echarts饼图数据
     getEchartsData() {
       this.echarts = {
         id: "consumption_head2",

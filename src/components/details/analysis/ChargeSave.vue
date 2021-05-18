@@ -15,7 +15,9 @@
         </div>
         <div class="charge-all-detail">
           <div class="charge-all-title">本月节省费用</div>
-          <span class="charge-all-num num">{{ allCharge }}</span
+          <span class="charge-all-num num">{{
+            parseInt(allCharge).toLocaleString()
+          }}</span
           >元
         </div>
       </div>
@@ -31,7 +33,7 @@
           <div class="charge-detail">
             <div class="charge-title">{{ item.title }}</div>
             <div class="charge-num">
-              <span class="num">{{ item.num }}</span
+              <span class="num">{{ parseInt(item.num).toLocaleString() }}</span
               >元
             </div>
           </div>
@@ -42,49 +44,60 @@
 </template>
 
 <script>
-import { getSavings } from "@/http/api";
+// 节省费用数据,数据从vuex中取得,接口在Home.vue中调用
+// import { getSavings } from "@/http/api";
+import { mapState } from "vuex";
 export default {
   name: "ChargeSave",
-  data() {
-    return {
-      chargeList: [],
-      allCharge: 0
-      // timer: null,
-      // interval: 60000
-    };
+  // data() {
+  //   return {
+  //     chargeList: [],
+  //     allCharge: 0
+  //     // timer: null,
+  //     // interval: 60000
+  //   };
+  // },
+  computed: {
+    ...mapState({
+      allCharge: state => state.allCharge,
+      chargeList: state => state.chargeList
+    })
   },
   methods: {
-    getChargeNum() {
-      getSavings().then(res => {
-        let data = res.data;
-        this.allCharge = Math.round(data.Total);
-        this.chargeList = [
-          {
-            title: "电",
-            icon: require("../../../assets/img/analysis-electric.png"),
-            num: Math.round(data.Electricity)
-          },
-          {
-            title: "热水",
-            icon: require("../../../assets/img/analysis-hotwater.png"),
-            num: Math.round(data.HotWater)
-          },
-          {
-            title: "冷",
-            icon: require("../../../assets/img/analysis-cold.png"),
-            num: Math.round(data.Cold)
-          },
-          {
-            title: "热",
-            icon: require("../../../assets/img/analysis-hot.png"),
-            num: Math.round(data.Hot)
-          }
-        ];
-      });
-    }
+    // getChargeNum() {
+    //   getSavings().then(res => {
+    //     let data = res.data;
+    //     this.allCharge = Math.round(data.Total);
+    //     this.chargeList = [
+    //       {
+    //         title: "电",
+    //         icon: require("../../../assets/img/analysis-electric.png"),
+    //         num: Math.round(data.Electricity)
+    //       },
+    //       {
+    //         title: "热水",
+    //         icon: require("../../../assets/img/analysis-hotwater.png"),
+    //         num: Math.round(data.HotWater)
+    //       },
+    //       {
+    //         title: "冷",
+    //         icon: require("../../../assets/img/analysis-cold.png"),
+    //         num: Math.round(data.Cold)
+    //       },
+    //       {
+    //         title: "热",
+    //         icon: require("../../../assets/img/analysis-hot.png"),
+    //         num: Math.round(data.Hot)
+    //       }
+    //     ];
+    //   });
+    // }
   },
   mounted() {
-    this.getChargeNum();
+    // this.getChargeNum();
+    // setInterval(() => {
+    //   this.getChargeNum();
+    // }, 10000);
     // this.timer = setInterval(() => {
     //   this.getChargeNum();
     // }, this.interval);
@@ -143,8 +156,11 @@ export default {
       width: 50%
       display: flex
       align-items: center
-      margin-top: 2vh
-      padding-left: 1vw
+      // margin-top: 2vh
+      // padding-left: 2vw
+      padding: 1vh 0 1vh 2vw
+      &:nth-child(odd)
+        border-right: 1px solid rgba(255, 255, 255, 0.5)
       .charge-icon
         width: 2.4074vh
         height: 2.4074vh

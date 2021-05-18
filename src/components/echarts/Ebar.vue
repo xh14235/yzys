@@ -37,7 +37,8 @@ export default {
     drawBar(barData) {
       let bodyWidth = document.body.offsetWidth;
       let font1 = bodyWidth > 1600 ? 12 : 10;
-      let font2 = bodyWidth > 1600 ? 16 : 12;
+      let font2 = bodyWidth > 1600 ? 14 : 12;
+      let yNameAlign = bodyWidth > 1600 ? "middle" : "top";
       let series = [];
       let seriesLength = barData.legendData.length;
       for (let i = 0; i < seriesLength; i++) {
@@ -95,11 +96,12 @@ export default {
           type: "value",
           name: barData.yName || "",
           nameLocation: "end",
+          splitNumber: 3,
           nameTextStyle: {
             color: this.white,
             fontSize: font1,
             align: "right",
-            verticalAlign: "top"
+            verticalAlign: yNameAlign
           },
           axisLabel: {
             show: true,

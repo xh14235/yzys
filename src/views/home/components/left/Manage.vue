@@ -34,6 +34,7 @@ export default {
   },
   methods: {
     ...mapMutations(["changeMapIconHeight"]),
+    // 获取一场监控信息列表
     getList() {
       getAbnormalMonitoring().then(res => {
         this.abnormalMonitoringList = res.data.map(item => {
@@ -43,24 +44,37 @@ export default {
       });
     }
   },
-  activated() {
+  mounted() {
     setTimeout(() => {
-      // let defaultHeight = document.body.scrollHeight * 0.78;
-      let line = this.$refs.line;
-      let height =
-        document.body.clientHeight - line.getBoundingClientRect().top;
-      // height = height === 0 ? defaultHeight : height;
-      this.changeMapIconHeight(height);
+      // let line = this.$refs.line;
+      // let height =
+      //   document.body.clientHeight - line.getBoundingClientRect().top;
+      // 获取左侧页面位置及高度，使地图控制按钮高度与左侧页面底部对齐
+      this.changeMapIconHeight(document.body.clientHeight * 0.205);
     }, 1000);
     this.getList();
     this.timer = setInterval(() => {
       this.getList();
     }, this.interval);
   },
-  deactivated() {
-    clearInterval(this.timer);
-    this.timer = null;
-  },
+  // activated() {
+  //   setTimeout(() => {
+  //     // let defaultHeight = document.body.scrollHeight * 0.78;
+  //     let line = this.$refs.line;
+  //     let height =
+  //       document.body.clientHeight - line.getBoundingClientRect().top;
+  //     // height = height === 0 ? defaultHeight : height;
+  //     this.changeMapIconHeight(height);
+  //   }, 1000);
+  //   this.getList();
+  //   this.timer = setInterval(() => {
+  //     this.getList();
+  //   }, this.interval);
+  // },
+  // deactivated() {
+  //   clearInterval(this.timer);
+  //   this.timer = null;
+  // },
   beforeDestroy() {
     clearInterval(this.timer);
     this.timer = null;

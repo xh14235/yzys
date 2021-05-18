@@ -10,6 +10,7 @@
 </template>
 
 <script>
+// 供热统计
 export default {
   name: "StatisticsHot",
   props: {

@@ -24,28 +24,19 @@ export default {
 </script>
 
 <style lang="stylus" scoped>
-.monitor-wrapper
-  width: 38vw
-  background: #ddd
-  position: absolute
-  bottom: 40vh
-  left: 31vw
-  z-index: 1
-  display: flex
-  flex-direction: column
-  .monitor-box
+.monitor-box
+  width: 100%
+  position: relative
+  video
     width: 100%
-    position: relative
-    video
-      width: 100%
-      vertical-align: top
-    .monitor-close
-      width: 2vh
-      height: 2vh
-      position: absolute
-      top: 0.5vh
-      right: 0.5vh
-      cursor: pointer
-  img
-    width: 100%
+    vertical-align: top
+  .monitor-close
+    width: 2vh
+    height: 2vh
+    position: absolute
+    top: 0.5vh
+    right: 0.5vh
+    cursor: pointer
+img
+  width: 100%
 </style>

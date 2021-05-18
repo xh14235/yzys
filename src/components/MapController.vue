@@ -11,6 +11,7 @@
       <div class="item-icon" :class="{ 'item-icon-active': item.active }"></div>
       <div class="item-title" v-show="item.titleShow">{{ item.title }}</div>
     </div>
+    <audio src="../assets/video/test.mp3" loop ref="audio"></audio>
   </div>
 </template>
 
@@ -60,15 +61,21 @@ export default {
       "changeMonitor"
     ]),
     itemClick(item) {
+      let audio = this.$refs.audio;
       item.active = !item.active;
       // 地图方法
       switch (item.id) {
         case "001":
           this.changeTagging();
-          this.changeMonitor();
+          // this.changeMonitor();
           break;
         case "002":
           this.changeAlarm();
+          if (item.active) {
+            audio.play();
+          } else {
+            audio.pause();
+          }
           break;
         case "003":
           this.changePiping();
@@ -80,14 +87,17 @@ export default {
           break;
       }
     },
+    // 鼠标移入icon彩色
     itemIconEnter(item) {
       item.titleShow = true;
     },
+    // 鼠标移出icon黑白
     itemIconLeave(item) {
       item.titleShow = false;
     }
   },
   watch: {
+    // 动态改变高度
     mapIconHeight() {
       let hei = document.body.clientHeight * 0.08;
       let controller = this.$refs.controller;

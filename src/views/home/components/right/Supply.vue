@@ -42,6 +42,7 @@ export default {
     }
   },
   methods: {
+    // 获取供冷统计echarts图数据
     getEchartsData1() {
       getSingleEnergyNum({
         type: "COLD"
@@ -67,6 +68,7 @@ export default {
         };
       });
     },
+    // 获取供热统计echarts图数据
     getEchartsData2() {
       getSingleEnergyNum({
         type: "HOT"
@@ -93,7 +95,7 @@ export default {
       });
     }
   },
-  activated() {
+  mounted() {
     this.getEchartsData1();
     this.getEchartsData2();
     this.timer = setInterval(() => {
@@ -101,10 +103,18 @@ export default {
       this.getEchartsData2();
     }, this.interval);
   },
-  deactivated() {
-    clearInterval(this.timer);
-    this.timer = null;
-  },
+  // activated() {
+  //   this.getEchartsData1();
+  //   this.getEchartsData2();
+  //   this.timer = setInterval(() => {
+  //     this.getEchartsData1();
+  //     this.getEchartsData2();
+  //   }, this.interval);
+  // },
+  // deactivated() {
+  //   clearInterval(this.timer);
+  //   this.timer = null;
+  // },
   beforeDestroy() {
     clearInterval(this.timer);
     this.timer = null;

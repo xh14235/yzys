@@ -23,14 +23,23 @@ export default {
   methods: {
     ...mapMutations(["changeMapIconHeight"])
   },
-  activated() {
+  mounted() {
     setTimeout(() => {
+      // 获取左侧页面位置及高度，使地图控制按钮高度与左侧页面底部对齐
       let line = this.$refs.line;
       let height =
         document.body.clientHeight - line.getBoundingClientRect().top;
       this.changeMapIconHeight(height);
     }, 1000);
   }
+  // activated() {
+  //   setTimeout(() => {
+  //     let line = this.$refs.line;
+  //     let height =
+  //       document.body.clientHeight - line.getBoundingClientRect().top;
+  //     this.changeMapIconHeight(height);
+  //   }, 1000);
+  // }
 };
 </script>
 

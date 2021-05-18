@@ -29,6 +29,7 @@ export default {
       let bodyWidth = document.body.offsetWidth;
       let font1 = bodyWidth > 1600 ? 12 : 10;
       let font2 = bodyWidth > 1600 ? 16 : 12;
+      let yNameAlign = bodyWidth > 1600 ? "middle" : "top";
       let series = [];
       let seriesLength = lineData.legendData.length;
       for (let i = 0; i < seriesLength; i++) {
@@ -75,11 +76,12 @@ export default {
           type: "value",
           name: lineData.yName || "",
           nameLocation: "end",
+          splitNumber: 2,
           nameTextStyle: {
             color: this.white,
             fontSize: font1,
             align: "right",
-            verticalAlign: "top"
+            verticalAlign: yNameAlign
           },
           axisLabel: {
             show: true,
@@ -135,7 +137,7 @@ export default {
         legend: legend,
         color: lineData.color,
         grid: {
-          top: "25%",
+          top: "30%",
           left: "5%",
           right: "5%",
           bottom: "5%",

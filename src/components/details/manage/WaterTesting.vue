@@ -54,6 +54,7 @@ export default {
     };
   },
   methods: {
+    // 获取水质数据
     getEchartsData() {
       let date = new Date();
       let hour = date.getHours();
@@ -108,5 +109,5 @@ export default {
     .info-detail
       .num
         color: $green
-        font-size: $font32
+        font-size: $font30
 </style>

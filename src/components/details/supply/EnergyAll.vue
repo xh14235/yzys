@@ -11,7 +11,7 @@
         <div class="energy-info">
           <div class="energy-title">{{ item.title }}</div>
           <div class="energy-num">
-            <span class="num">{{ item.num }}</span
+            <span class="num">{{ parseInt(item.num).toLocaleString() }}</span
             >kWh
           </div>
         </div>
@@ -33,6 +33,7 @@ export default {
     ...mapState(["supplyData"])
   },
   methods: {
+    // 获取左上累计功能数据
     getList() {
       this.energyList = [
         {

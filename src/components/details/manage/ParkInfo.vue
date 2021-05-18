@@ -96,6 +96,6 @@ export default {
     .info-msg
       .info-num
         .num
-          font-size: $font22
+          font-size: $font30
           color: $green
 </style>

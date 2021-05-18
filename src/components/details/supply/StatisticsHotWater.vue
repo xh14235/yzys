@@ -10,6 +10,7 @@
 </template>
 
 <script>
+// 供热水统计
 export default {
   name: "StatisticsElectric",
   props: {

@@ -77,6 +77,12 @@ export default {
           orient: "vertical",
           right: 0,
           bottom: "center",
+          data: pieData.data.map((item, index) => {
+            item.icon =
+              "image://" +
+              require("../../assets/img/legend-icon" + (index + 1) + ".png");
+            return item;
+          }),
           formatter(name) {
             var data = option.series[0].data;
             var tarValue;
@@ -84,6 +90,7 @@ export default {
             for (var i = 0, l = data.length; i < l; i++) {
               sumValue += data[i].value;
             }
+            sumValue = sumValue === 0 ? 1 : sumValue;
             for (var j = 0, d = data.length; j < d; j++) {
               if (data[j].name === name) {
                 tarValue = (data[j].value * 100) / sumValue;
@@ -111,7 +118,11 @@ export default {
                 // for (let i = 0; i < params) {}
                 // console.log(params)
                 // return params.percent + parseInt(params.percent) + '%'
-                return parseInt(params.percent) + "%";
+                if (params.percent === 0) {
+                  return "0%";
+                } else {
+                  return parseInt(params.percent) + "%";
+                }
               },
               fontSize: font1
             },

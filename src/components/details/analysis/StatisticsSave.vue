@@ -17,12 +17,22 @@
       </div>
       <div class="controller-item">
         <div class="tab-box" v-show="curDate === 0">
-          <el-date-picker v-model="month1" type="month" placeholder="选择月">
+          <el-date-picker
+            v-model="month1"
+            type="month"
+            placeholder="选择月"
+            :picker-options="pickerOptions1"
+          >
           </el-date-picker>
           <div class="triangle"></div>
         </div>
         <div class="tab-box" v-show="curDate === 1">
-          <el-date-picker v-model="day" type="date" placeholder="选择日期">
+          <el-date-picker
+            v-model="day"
+            type="date"
+            placeholder="选择日期"
+            :picker-options="pickerOptions2"
+          >
           </el-date-picker>
           <div class="triangle"></div>
         </div>
@@ -64,9 +74,19 @@ export default {
           val: 1
         }
       ],
-      curDate: 0,
+      curDate: 1,
       month1: new Date(),
-      day: new Date()
+      day: new Date(),
+      pickerOptions1: {
+        disabledDate: time => {
+          return time.getTime() > Date.now() - 8.64e6;
+        }
+      },
+      pickerOptions2: {
+        disabledDate: time => {
+          return time.getTime() > Date.now() - 8.64e6;
+        }
+      }
     };
   },
   computed: {
@@ -79,7 +99,8 @@ export default {
     Eline: () => import("@/components/echarts/Eline")
   },
   methods: {
-    getEchartsData(dateType, date) {
+    // 获取echarts图数据
+    getEchartsData(dateType, date, type) {
       let year = date.getFullYear();
       let month = date.getMonth() + 1;
       month = month > 9 ? month : "0" + month;
@@ -88,99 +109,176 @@ export default {
       date = year + "-" + month + "-" + day;
       getEnergySavingTrend({
         date,
-        dateType
+        dateType,
+        type
       }).then(res => {
         let data = res.data;
-        let xData = data.Cold.map(item => {
-          return item.commonValue;
-        });
-        let yData1 = data.Electricity.map(item => {
-          return item.value;
-        });
-        let yData2 = data.HotWater.map(item => {
-          return item.value;
-        });
-        let yData3 = data.Cold.map(item => {
-          return item.value;
-        });
-        let yData4 = data.Hot.map(item => {
-          return item.value;
-        });
-        this.echarts1 = {
-          id: "echarts1",
-          title: "节约电",
-          legendShow: false,
-          legendData: ["节约电"],
-          color: [this.white],
-          areaColor: true,
-          smooth: true,
-          xData: xData,
-          yName: "(kWh)",
-          data: [yData1]
-        };
-        this.echarts2 = {
-          id: "echarts2",
-          title: "节约热水",
-          legendShow: false,
-          legendData: ["节约热水"],
-          color: [this.white],
-          areaColor: true,
-          smooth: true,
-          xData: xData,
-          yName: "(kWh)",
-          data: [yData2]
-        };
-        this.echarts3 = {
-          id: "echarts3",
-          title: "节约冷",
-          legendShow: false,
-          legendData: ["节约冷"],
-          color: [this.white],
-          areaColor: true,
-          smooth: true,
-          xData: xData,
-          yName: "(kWh)",
-          data: [yData3]
-        };
-        this.echarts4 = {
-          id: "echarts4",
-          title: "节约热",
-          legendShow: false,
-          legendData: ["节约热"],
-          color: [this.white],
-          areaColor: true,
-          smooth: true,
-          xData: xData,
-          yName: "(kWh)",
-          data: [yData4]
-        };
+        let len = data.length;
+        let month30 = [4, 6, 9, 11];
+        let month31 = [1, 3, 5, 7, 8, 10, 12];
+        let forNum = 0;
+        let xData = [];
+        let yData = [];
+        if (!len) {
+          if (dateType === "day") {
+            forNum = 24;
+          } else {
+            if (month30.includes(Number(month))) {
+              forNum = 30;
+            } else if (month31.includes(Number(month))) {
+              forNum = 31;
+            } else {
+              if ((year % 4 === 0 && year % 100 !== 0) || year % 400 === 0) {
+                forNum = 29;
+              } else {
+                forNum = 28;
+              }
+            }
+          }
+          for (let i = 1; i <= forNum; i++) {
+            xData.push(i);
+            yData.push(0);
+          }
+        } else {
+          let first = data[0].commonValue;
+          let last = data[data.length - 1].commonValue;
+          yData = data.map(item => {
+            return item.value;
+          });
+          if (dateType === "day") {
+            for (let i = 1; i < 25; i++) {
+              xData.push(i);
+            }
+            for (let i = last + 1; i < 25; i++) {
+              yData.push(0);
+            }
+          } else {
+            if (month30.includes(Number(month))) {
+              forNum = 30;
+            } else if (month31.includes(Number(month))) {
+              forNum = 31;
+            } else {
+              if ((year % 4 === 0 && year % 100 !== 0) || year % 400 === 0) {
+                forNum = 29;
+              } else {
+                forNum = 28;
+              }
+            }
+            for (let i = 1; i <= forNum; i++) {
+              xData.push(i);
+            }
+            for (let i = last + 1; i <= forNum; i++) {
+              yData.push(0);
+            }
+            for (let i = first - 1; i > 0; i--) {
+              yData.unshift(0);
+            }
+          }
+        }
+        switch (type) {
+          case "ELECTRICITY":
+            this.echarts1 = {
+              id: "echarts1",
+              title: "节约电",
+              legendShow: false,
+              legendData: ["节约电"],
+              color: [this.white],
+              areaColor: true,
+              smooth: true,
+              xData: xData,
+              yName: "(kWh)",
+              data: [yData]
+            };
+            break;
+          case "HOT_WATER":
+            this.echarts2 = {
+              id: "echarts2",
+              title: "节约热水",
+              legendShow: false,
+              legendData: ["节约热水"],
+              color: [this.white],
+              areaColor: true,
+              smooth: true,
+              xData: xData,
+              yName: "(kWh)",
+              data: [yData]
+            };
+            break;
+          case "COLD":
+            this.echarts3 = {
+              id: "echarts3",
+              title: "节约冷",
+              legendShow: false,
+              legendData: ["节约冷"],
+              color: [this.white],
+              areaColor: true,
+              smooth: true,
+              xData: xData,
+              yName: "(kWh)",
+              data: [yData]
+            };
+            break;
+          case "HOT":
+            this.echarts4 = {
+              id: "echarts5",
+              title: "节约热",
+              legendShow: false,
+              legendData: ["节约热"],
+              color: [this.white],
+              areaColor: true,
+              smooth: true,
+              xData: xData,
+              yName: "(kWh)",
+              data: [yData]
+            };
+            break;
+          default:
+            break;
+        }
       });
     },
+    // 改变日期类型,按月或者按天,获取数据
     changeTab(index) {
       this.curDate = index;
       if (this.curDate === 0) {
-        this.getEchartsData("month", this.month1);
+        this.getEchartsData("month", this.month1, "COLD");
+        this.getEchartsData("month", this.month1, "ELECTRICITY");
+        this.getEchartsData("month", this.month1, "HOT");
+        this.getEchartsData("month", this.month1, "HOT_WATER");
       } else {
-        this.getEchartsData("day", this.day);
+        this.getEchartsData("day", this.day, "COLD");
+        this.getEchartsData("day", this.day, "ELECTRICITY");
+        this.getEchartsData("day", this.day, "HOT");
+        this.getEchartsData("day", this.day, "HOT_WATER");
       }
     }
-    // 获取当前月
-    // getNowMonth() {
-    //   let date = new Date();
-    //   this.month = date.getMonth() + 1;
-    // }
   },
   watch: {
     month1() {
-      this.getEchartsData("month", this.month1);
+      this.getEchartsData("month", this.month1, "COLD");
+      this.getEchartsData("month", this.month1, "ELECTRICITY");
+      this.getEchartsData("month", this.month1, "HOT");
+      this.getEchartsData("month", this.month1, "HOT_WATER");
     },
     day() {
-      this.getEchartsData("day", this.day);
+      this.getEchartsData("day", this.day, "COLD");
+      this.getEchartsData("day", this.day, "ELECTRICITY");
+      this.getEchartsData("day", this.day, "HOT");
+      this.getEchartsData("day", this.day, "HOT_WATER");
     }
   },
   mounted() {
     // this.getNowMonth();
-    this.getEchartsData("month", this.month1);
+    this.getEchartsData("day", this.day, "COLD");
+    this.getEchartsData("day", this.day, "ELECTRICITY");
+    this.getEchartsData("day", this.day, "HOT");
+    this.getEchartsData("day", this.day, "HOT_WATER");
+    // setInterval(() => {
+    //   this.getEchartsData("month", this.month1, "COLD");
+    //   this.getEchartsData("month", this.month1, "ELECTRICITY");
+    //   this.getEchartsData("month", this.month1, "HOT");
+    //   this.getEchartsData("month", this.month1, "HOT_WATER");
+    // }, 10000);
   }
 };
 </script>

@@ -6,13 +6,23 @@
     <div class="month-box">
       <div class="month-item">
         <span>月份一</span>
-        <el-date-picker v-model="month1" type="month" placeholder="选择月">
+        <el-date-picker
+          v-model="month1"
+          type="month"
+          placeholder="选择月"
+          :picker-options="pickerOptions1"
+        >
         </el-date-picker>
         <div class="triangle"></div>
       </div>
       <div class="month-item">
         <span>月份二</span>
-        <el-date-picker v-model="month2" type="month" placeholder="选择月">
+        <el-date-picker
+          v-model="month2"
+          type="month"
+          placeholder="选择月"
+          :picker-options="pickerOptions2"
+        >
         </el-date-picker>
         <div class="triangle"></div>
       </div>
@@ -36,7 +46,21 @@ export default {
       list1: [],
       list2: [],
       legend1: "上月",
-      legend2: "本月"
+      legend2: "本月",
+      pickerOptions1: {
+        disabledDate: time => {
+          if (this.month2 != "") {
+            return time.getTime() > Date.now() || time.getTime() > this.month2;
+          } else {
+            return time.getTime() > Date.now();
+          }
+        }
+      },
+      pickerOptions2: {
+        disabledDate: time => {
+          return time.getTime() < this.month1 || time.getTime() > Date.now();
+        }
+      }
       // timer: null,
       // interval: 3000
     };
@@ -51,6 +75,7 @@ export default {
     Ebar: () => import("@/components/echarts/Ebar")
   },
   methods: {
+    // 获取echarts图数据,画出饼图
     getEchartsData() {
       this.echarts = {
         id: "energySave",
@@ -99,6 +124,7 @@ export default {
         }
       });
     },
+    // 获取固定格式的日期
     getYearMonth(d1, d2) {
       let date1 = new Date(d1);
       let year1 = date1.getFullYear();
@@ -143,6 +169,9 @@ export default {
   },
   mounted() {
     this.getNowMonth();
+    // setInterval(() => {
+    //   this.getMonthData(0, this.month1);
+    // }, 10000);
   }
 };
 </script>

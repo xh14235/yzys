@@ -1,14 +1,13 @@
 <template>
-  <div class="home-left">
+  <div class="home-left" v-show="!cubeShow">
     <div class="header-title">
       <img src="../../../assets/img/logo.png" alt="" />
     </div>
     <transition name="fade" mode="out-in">
-      <keep-alive>
-        <component :is="view"></component>
-      </keep-alive>
+      <!-- <keep-alive> -->
+      <component :is="view"></component>
+      <!-- </keep-alive> -->
     </transition>
-    <!-- <div class="line" ref="line"></div> -->
   </div>
 </template>
 
@@ -23,7 +22,12 @@ export default {
     Analysis: () => import("./left/Analysis")
   },
   computed: {
-    ...mapState(["mapTab", "dispose"]),
+    ...mapState({
+      mapTab: state => state.mapTab,
+      dispose: state => state.dispose,
+      cubeShow: state => state.map.cubeShow
+    }),
+    // 动态加载组件
     view() {
       let components = Object.keys(this.dispose);
       let component = components[this.mapTab];
